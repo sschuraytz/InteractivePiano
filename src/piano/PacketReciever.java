@@ -30,7 +30,7 @@ public class PacketReciever extends Thread
 			while ((line = reader.readLine()) != null)
 			{
 				// write to all clients
-				packets.add(line);
+				//packets.add(line);
 			}
 		}
 		catch (IOException e)

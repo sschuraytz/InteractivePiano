@@ -73,7 +73,7 @@ public class TestFrame extends JFrame
 		label.setPreferredSize(new Dimension(5, 300));
 		label.setOpaque(true);
 		label.setBackground(Color.BLACK);
-		// top.add(label);
+		 top.add(label);
 
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(100, 300));

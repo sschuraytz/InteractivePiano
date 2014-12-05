@@ -114,7 +114,8 @@ public class AvivaTestGUI extends JFrame implements MouseListener {
 		bottom.add(black6);
 
 		this.add(top, BorderLayout.NORTH);
-		this.add(bottom, BorderLayout.SOUTH);
+		this.add(bottom, BorderLayout.CENTER);
+		pack();
 	}
 
 	public static void main(String[] args) {
@@ -125,9 +126,11 @@ public class AvivaTestGUI extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == white1)
-			;
+		if (e.getSource() == white1);
 		white1.setText("Hi");
+		white1.setBackground(Color.BLUE);
+		white1.setOpaque(true);
+		white1.repaint();
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class KeyListener implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		PianoLabel pl = (PianoLabel)e.getSource();
-		pl.getKey().play();
+		pl.getKey().sendPacket();
 		
 	}
 

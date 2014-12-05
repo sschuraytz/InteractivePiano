@@ -4,8 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 
 public class PianoGUI extends JFrame {
 	private Color clientColor = Color.BLUE; //sent by server - randomly generate int converted to color
+	private Socket socket;
 	
 	public PianoGUI() {
 		this.setTitle("MY PIANO");
@@ -68,7 +68,7 @@ public class PianoGUI extends JFrame {
 		{
 			if (i % 2 == 0) //white key
 			{
-				k = new Key(null, new PianoLabel[]{topRowLabels[i], bottomRowLabels[i]}, clientColor, i);
+				k = new Key(null, new PianoLabel[]{topRowLabels[i], bottomRowLabels[i]}, clientColor, i, this);
 				topRowLabels[i].setKey(k);
 				bottomRowLabels[i].setKey(k);
 				keys.add(k);
@@ -77,20 +77,26 @@ public class PianoGUI extends JFrame {
 			{
 				if (i != 5) //not skinny dude
 				{
-					k = new Key(null, new PianoLabel[]{topRowLabels[i]}, clientColor, i);
+					k = new Key(null, new PianoLabel[]{topRowLabels[i]}, clientColor, i, this);
 					topRowLabels[i].setKey(k);
 					keys.add(k);
 				}
 			}
 		}
 		
-
-		// UpdateGUIThread thread = new UpdateGUIThread(this);
-		// thread.start();
 		pack();
+		
+		// socket and related components remain null until a connection is made
+		ClientReceiver conn = new ClientReceiver(this, keys);
+		conn.start();
+		
 	}
 
-	
+	public void setSocket(Socket socket)
+	{
+		this.socket = socket;
+		//maybe set the clientColor here? get outputstream and recieve the rand color
+	}
 
 	public Color getClientColor() {
 		return clientColor;
@@ -107,5 +113,12 @@ public class PianoGUI extends JFrame {
 	public static void main(String[] args) {
 		PianoGUI gui = new PianoGUI();
 		gui.setVisible(true);
+	}
+
+
+
+	public Socket getSocket() {
+		return socket;
+		
 	}
 }

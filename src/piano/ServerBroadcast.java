@@ -1,6 +1,7 @@
 package piano;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -8,15 +9,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
-public class PacketBroadcast extends Thread
+public class ServerBroadcast extends Thread
 {
-	private List<Socket> sockets;
+	private List<SocketComponents> socketComponents;
 	private BlockingQueue<PianoPacket> packets;
 
-	public PacketBroadcast(BlockingQueue<PianoPacket> pianoPackets, List<Socket> sockets)
+	public ServerBroadcast(BlockingQueue<PianoPacket> pianoPackets, List<SocketComponents> socketComponents)
 	{
 		this.packets = pianoPackets;
-		this.sockets = sockets;
+		this.socketComponents = socketComponents;
 	}
 
 	public void run()
@@ -27,20 +28,17 @@ public class PacketBroadcast extends Thread
 			{
 				PianoPacket packet = packets.take();
 
-				Iterator<Socket> iter = sockets.iterator();
+				Iterator<Socket> iter = socketComponents.iterator();
 
 				while (iter.hasNext())
 				{
 					Socket socket = iter.next();
-					try
-					{
-						OutputStream out = socket.getOutputStream();
-						PrintWriter writer = new PrintWriter(out); // change to write object and send out entire packet
-						writer.println(packet);
-						writer.flush();
-					}
-					catch (IOException e)
-					{
+					try {
+						ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+						oos.writeObject(packet);
+						oos.flush(); //do we need to flush?				
+			    		//oos.close();
+					} catch (IOException e) {
 						e.printStackTrace();
 						iter.remove();
 					}

@@ -3,6 +3,8 @@ package piano;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.swing.Timer;
 
@@ -11,12 +13,14 @@ public class Key {
 	private Sound sound;
 	private Color clientColor;
 	private int position;
+	private PianoGUI gui;
 
-	public Key(Sound sound, PianoLabel[] pianoLabels, Color clientColor, int position) {
+	public Key(Sound sound, PianoLabel[] pianoLabels, Color clientColor, int position, PianoGUI gui) {
 		this.sound = sound;
 		this.pianoLabels = pianoLabels;
 		this.clientColor = clientColor;
 		this.position = position;
+		this.gui = gui;
 
 	}
 
@@ -28,17 +32,13 @@ public class Key {
 	}
 
 	public void playSound() {
+		
 	}
-
-	public void play() {
+	
+	public void play(Color color){
 		//change background for as as long as note plays
 		//sound.play();
-		setColor(clientColor);
-		//for (long i = 0; i < 9999999; i++) //simulate waiting for sound to finish
-		//{
-			//waste time
-		//}
-		
+		setColor(color);		
 		ActionListener action = new ActionListener() {
 
 		    @Override
@@ -48,11 +48,21 @@ public class Key {
 		};
 
 		Timer t = new Timer(1000, action);
-		//t.setRepeats(false);
-		t.start();
-		
-		//resetColor();
-		
+		t.start();	
+	}
+
+	public void sendPacket() {
+
+    		ObjectOutputStream oos;
+			try {
+				oos = new ObjectOutputStream(gui.getSocket().getOutputStream());
+				oos.writeObject(new PianoPacket(position, clientColor));
+				oos.flush(); //do we need to flush?				
+	    		//oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		
 		
 	}
 

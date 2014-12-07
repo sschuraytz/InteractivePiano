@@ -89,7 +89,7 @@ public class PianoGUI extends JFrame
 
 		pack();
 
-		// socket and related components remain null until a connection is made
+		// outStream remains null until a connection is made
 		ClientReceiver conn = new ClientReceiver(this, keys);
 		conn.start();
 

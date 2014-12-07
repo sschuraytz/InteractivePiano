@@ -9,7 +9,7 @@ public class PianoPacket implements Serializable
 	private int keyPosition;
 	private Color clientColor;
 
-	// add sound when implemented
+	// sound when implemented
 
 	public PianoPacket(int keyPosition, Color clientColor)
 	{

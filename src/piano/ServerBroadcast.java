@@ -33,8 +33,7 @@ public class ServerBroadcast extends Thread
 					try
 					{
 						out.writeObject(packet);
-						out.flush(); // do we need to flush?
-						// oos.close();
+						out.flush();
 					}
 					catch (IOException e)
 					{

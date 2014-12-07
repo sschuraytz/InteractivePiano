@@ -2,11 +2,13 @@ package piano;
 
 import java.awt.Color;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
-public class ClientReceiver extends Thread {
+public class ClientReceiver extends Thread
+{
 
 	private Socket socket;
 	private PianoGUI gui;
@@ -26,30 +28,32 @@ public class ClientReceiver extends Thread {
 		{
 			// establish the connection
 			socket = new Socket("localhost", 3773);
-			
-			// once connection is made, send it back to the gui
-			gui.setSocket(socket);
 
-			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-			//1st thing sent is clientColor
-			gui.setClientColor((Color)in.readObject());
-			
-			//now receives the PianoPackets
+			// once connection is made, send it back to the gui
+			// gui.setSocket(socket);
+
+			// can only have 1 instance of output stream, so sending it to gui cuz gui doesnt need the socket/in stream
+			gui.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
+
+			ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); // should be the only in stream
+			// 1st thing sent is clientColor
+			Color c = (Color) in.readObject();
+			System.out.println("client color: " + c);
+			gui.setClientColor(c);
+
+			// now receives the PianoPackets
 			PianoPacket packet;
-			//potential solution to EOFException
-			//1.Before sending the file, send its length, via writeLong().
-			//2. At the receiver, when receiving the file, first get its length, via readLong(), then read exactly that many bytes from the ObjectInputStream and copy them to the file.
-			//look into protocol buffers
-			while(true)
+			while (true)
 			{
-				//http://stackoverflow.com/questions/2393179/streamcorruptedexception-invalid-type-code-ac
-				packet = (PianoPacket)in.readObject();
+				// http://stackoverflow.com/questions/2393179/streamcorruptedexception-invalid-type-code-ac
+				packet = (PianoPacket) in.readObject();
+				// System.out.println("ClientReceiver: key pos = " + packet.getKeyPosition() + " color = " + packet.getClientColor());
 				keys.get(packet.getKeyPosition()).play(packet.getClientColor());
 			}
 		}
-		catch ( SocketException e ) 
+		catch (SocketException e)
 		{
-			//"restart" thread
+			// "restart" thread
 			new ClientReceiver(gui, keys).start();
 		}
 		catch (Exception e)
@@ -58,4 +62,3 @@ public class ClientReceiver extends Thread {
 		}
 	}
 }
-

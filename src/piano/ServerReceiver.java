@@ -1,21 +1,17 @@
 package piano;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 public class ServerReceiver extends Thread
 {
-	private Socket socket;
+	private ObjectInputStream in;
 	private BlockingQueue<PianoPacket> packets;
 
-	public ServerReceiver(Socket s, BlockingQueue<PianoPacket> pianoPackets)
+	public ServerReceiver(ObjectInputStream in, BlockingQueue<PianoPacket> pianoPackets)
 	{
-		socket = s;
+		this.in = in;
 		this.packets = pianoPackets;
 	}
 
@@ -23,18 +19,20 @@ public class ServerReceiver extends Thread
 	{
 		try
 		{
-			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-
 			while (true)
 			{
-				packets.add((PianoPacket)in.readObject());
+				PianoPacket packet = (PianoPacket) in.readObject();
+				// System.out.println("ServerReceiver: key pos = " + packet.getKeyPosition() + " color = " + packet.getClientColor());
+				packets.add(packet);
 			}
 		}
 		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

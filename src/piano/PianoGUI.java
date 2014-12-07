@@ -4,17 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.net.Socket;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class PianoGUI extends JFrame {
-	private Color clientColor = Color.BLUE; //sent by server - randomly generate int converted to color
-	private Socket socket;
-	
-	public PianoGUI() {
+public class PianoGUI extends JFrame
+{
+	private Color clientColor = Color.BLUE; // sent by server - randomly generate int converted to color
+	private ObjectOutputStream out;
+
+	public PianoGUI()
+	{
 		this.setTitle("MY PIANO");
 		this.setSize(500, 300); // final size will be determined by pack()
 		this.setLocationRelativeTo(null);
@@ -27,19 +29,19 @@ public class PianoGUI extends JFrame {
 		add(top, BorderLayout.NORTH);
 
 		PianoLabel[] topRowLabels = new PianoLabel[13];
-		for (int i = 0; i < 13; i++) {
-			if (i == 5){
-				topRowLabels[i] = new PianoLabel(new Dimension(8, 200), Color.BLACK); //skinny dude
+		for (int i = 0; i < 13; i++)
+		{
+			if (i == 5)
+			{
+				topRowLabels[i] = new PianoLabel(new Dimension(8, 200), Color.BLACK); // skinny dude
 			}
 			else
 			{
-			topRowLabels[i] = new PianoLabel(new Dimension(70, 200), i % 2 == 0 ? Color.WHITE : Color.BLACK);
-			topRowLabels[i].addMouseListener(new KeyListener());
+				topRowLabels[i] = new PianoLabel(new Dimension(70, 200), i % 2 == 0 ? Color.WHITE : Color.BLACK);
+				topRowLabels[i].addMouseListener(new KeyListener());
 			}
 			top.add(topRowLabels[i]);
 		}
-		
-		
 
 		// instantiate bottom row labels
 		JPanel bottom = new JPanel();
@@ -47,9 +49,9 @@ public class PianoGUI extends JFrame {
 		add(bottom, BorderLayout.CENTER);
 
 		PianoLabel[] bottomRowLabels = new PianoLabel[13];
-		boolean whiteKey;
-		for (int i = 0; i < 13; i++) {
-			if(i % 2 == 0) //whiteKey
+		for (int i = 0; i < 13; i++)
+		{
+			if (i % 2 == 0) // whiteKey
 			{
 				bottomRowLabels[i] = new PianoLabel(new Dimension(130, 150), Color.WHITE);
 				bottomRowLabels[i].addMouseListener(new KeyListener());
@@ -60,65 +62,62 @@ public class PianoGUI extends JFrame {
 			}
 			bottom.add(bottomRowLabels[i]);
 		}
-		
-		//link labels to keys
+
+		// link labels to keys
 		ArrayList<Key> keys = new ArrayList<>();
 		Key k;
 		for (int i = 0; i < 13; i++)
 		{
-			if (i % 2 == 0) //white key
+			if (i % 2 == 0) // white key
 			{
-				k = new Key(null, new PianoLabel[]{topRowLabels[i], bottomRowLabels[i]}, clientColor, i, this);
+				k = new Key(null, new PianoLabel[] { topRowLabels[i], bottomRowLabels[i] }, keys.size(), this);
 				topRowLabels[i].setKey(k);
 				bottomRowLabels[i].setKey(k);
 				keys.add(k);
 			}
-			else //black key
+			else
+			// black key
 			{
-				if (i != 5) //not skinny dude
+				if (i != 5) // not skinny dude
 				{
-					k = new Key(null, new PianoLabel[]{topRowLabels[i]}, clientColor, i, this);
+					k = new Key(null, new PianoLabel[] { topRowLabels[i] }, keys.size(), this);
 					topRowLabels[i].setKey(k);
 					keys.add(k);
 				}
 			}
 		}
-		
+
 		pack();
-		
+
 		// socket and related components remain null until a connection is made
 		ClientReceiver conn = new ClientReceiver(this, keys);
 		conn.start();
-		
+
 	}
 
-	public void setSocket(Socket socket)
+	public Color getClientColor()
 	{
-		this.socket = socket;
-		//maybe set the clientColor here? get outputstream and recieve the rand color
-	}
-
-	public Color getClientColor() {
 		return clientColor;
 	}
 
-
-
-	public void setClientColor(Color clientColor) {
+	public void setClientColor(Color clientColor)
+	{
 		this.clientColor = clientColor;
 	}
 
-
-
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		PianoGUI gui = new PianoGUI();
 		gui.setVisible(true);
 	}
 
+	public void setObjectOutputStream(ObjectOutputStream objectOutputStream)
+	{
+		out = objectOutputStream;
+	}
 
-
-	public Socket getSocket() {
-		return socket;
-		
+	public ObjectOutputStream getObjectOutputStream()
+	{
+		return out;
 	}
 }

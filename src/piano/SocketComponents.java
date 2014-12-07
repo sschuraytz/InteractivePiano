@@ -17,10 +17,10 @@ public SocketComponents(Socket socket, ObjectOutputStream out, ObjectInputStream
 public Socket getSocket() {
 	return socket;
 }
-public ObjectOutputStream getOut() {
+public ObjectOutputStream getObjectOutputStream() {
 	return out;
 }
-public ObjectInputStream getIn() {
+public ObjectInputStream getObjectInputStream() {
 	return in;
 }
 

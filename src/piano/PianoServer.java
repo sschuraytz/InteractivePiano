@@ -39,7 +39,6 @@ public class PianoServer
 				// System.out.println("server color: " + color);
 				out.flush();
 				in = new ObjectInputStream(socket.getInputStream());
-				// oos.close();
 
 				// add to list of outStreams
 				outStreams.add(out);

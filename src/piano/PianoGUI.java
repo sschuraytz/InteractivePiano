@@ -33,11 +33,19 @@ public class PianoGUI extends JFrame
 		{
 			if (i == 5)
 			{
-				topRowLabels[i] = new PianoLabel(new Dimension(8, 200), Color.BLACK); // skinny dude
+				topRowLabels[i] = new PianoLabel(new Dimension(10, 448), Color.BLACK); // skinny dude
 			}
 			else
 			{
-				topRowLabels[i] = new PianoLabel(new Dimension(70, 200), i % 2 == 0 ? Color.WHITE : Color.BLACK);
+				if (i % 2 == 0) // white
+				{
+					topRowLabels[i] = new PianoLabel(new Dimension(72, 448), Color.WHITE);
+				}
+				else
+				{
+					topRowLabels[i] = new PianoLabel(new Dimension(61, 448), Color.BLACK);
+				}
+
 				topRowLabels[i].addMouseListener(new KeyListener());
 			}
 			top.add(topRowLabels[i]);
@@ -53,12 +61,12 @@ public class PianoGUI extends JFrame
 		{
 			if (i % 2 == 0) // whiteKey
 			{
-				bottomRowLabels[i] = new PianoLabel(new Dimension(130, 150), Color.WHITE);
+				bottomRowLabels[i] = new PianoLabel(new Dimension(i == 8 || i == 10 ? 114 : 105, 256), Color.WHITE);
 				bottomRowLabels[i].addMouseListener(new KeyListener());
 			}
 			else
 			{
-				bottomRowLabels[i] = new PianoLabel(new Dimension(8, 150), Color.BLACK);
+				bottomRowLabels[i] = new PianoLabel(new Dimension(11, 256), Color.BLACK);
 			}
 			bottom.add(bottomRowLabels[i]);
 		}

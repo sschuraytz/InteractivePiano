@@ -27,7 +27,7 @@ public class ClientReceiver extends Thread
 		try
 		{
 			// establish the connection
-			socket = new Socket("localhost", 3773);
+			socket = new Socket("192.168.1.106", 3773);
 
 			// once connection is made, send it back to the gui
 			// gui.setSocket(socket);
@@ -38,7 +38,6 @@ public class ClientReceiver extends Thread
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); // should be the only in stream
 			// 1st thing sent is clientColor
 			Color c = (Color) in.readObject();
-			System.out.println("client color: " + c);
 			gui.setClientColor(c);
 
 			// now receives the PianoPackets

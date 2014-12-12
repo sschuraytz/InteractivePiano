@@ -36,7 +36,6 @@ public class PianoServer
 			{
 				out = new ObjectOutputStream(socket.getOutputStream());
 				out.writeObject(color); // give the client its clientColor
-				// System.out.println("server color: " + color);
 				out.flush();
 				in = new ObjectInputStream(socket.getInputStream());
 

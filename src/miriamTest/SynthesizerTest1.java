@@ -11,7 +11,7 @@ public class SynthesizerTest1 {
 		int channel = 0; // 0 is a piano, 9 is percussion, other channels are for other instruments
 
 		int volume = 80; // between 0 et 127
-		int duration = 200; // in milliseconds
+		int duration = 1000; // in milliseconds
 
 		try {
 			Synthesizer synth = MidiSystem.getSynthesizer();

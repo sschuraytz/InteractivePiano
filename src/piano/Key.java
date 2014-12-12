@@ -11,17 +11,14 @@ import javax.swing.Timer;
 public class Key
 {
 	private PianoLabel[] pianoLabels;
-	private Sound sound;
 	private int position;
 	private PianoGUI gui;
 
-	public Key(Sound sound, PianoLabel[] pianoLabels, int position, PianoGUI gui)
+	public Key(PianoLabel[] pianoLabels, int position, PianoGUI gui)
 	{
-		this.sound = sound;
 		this.pianoLabels = pianoLabels;
 		this.position = position;
 		this.gui = gui;
-
 	}
 
 	public void setColor(Color color)
@@ -41,7 +38,8 @@ public class Key
 	public void play(Color color)
 	{
 		// change background for as as long as note plays
-		// sound.play();
+		SoundThread s = new SoundThread(position + 60, gui.getSoundSettings()); //pass in pitch to play
+		s.start();
 		setColor(color);
 		ActionListener action = new ActionListener()
 		{

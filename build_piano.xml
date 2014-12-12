@@ -1,0 +1,17 @@
+<project name="antsimple" default="dist" basedir=".">
+	
+
+	<target name="dist" description="generate the distribution">
+		<jar jarfile="Piano.jar">
+			<manifest>
+			<attribute name="Main-Class"
+				value="piano.PianoGUI"/>
+				</manifest>
+  
+			<fileset dir="./bin">
+				<include name="piano/*.class"/>
+				<include name="piano/*.txt"/>
+			</fileset>
+			</jar>
+	</target>
+</project>

@@ -105,8 +105,6 @@ public class PianoGUI extends JFrame
 		setResizable(false);
 		pack();
 
-		System.out.println("width = " + this.getWidth() + " height = " + this.getHeight());
-
 		// setting up sound
 		Synthesizer synth = MidiSystem.getSynthesizer();
 		synth.open();

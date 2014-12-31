@@ -44,7 +44,7 @@ public class PianoGUI extends JFrame
 			}
 			else
 			{
-				if (i % 2 == 0) // white
+				if ((i & 1) == 0) // white
 				{
 					topRowLabels[i] = new PianoLabel(new Dimension(72, 448), Color.WHITE);
 				}
@@ -149,7 +149,7 @@ public class PianoGUI extends JFrame
 			int channel = soundSettings.getCHANNEL();
 			int volume = soundSettings.getVOLUME();
 
-			int[] notes = { 60, 62, 64, 65, 67, 69, 71, 72 }; // C, D, E, F, G, A, B, C
+			int[] notes = { Notes.C, 62, 64, 65, 67, 69, 71, 72 }; // C, D, E, F, G, A, B, C
 			for (int i = 0; i <= 7; ++i)
 			{
 				channels[channel].noteOn(notes[i], volume);

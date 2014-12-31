@@ -27,7 +27,7 @@ public class ClientReceiver extends Thread
 		try
 		{
 			// establish the connection
-			socket = new Socket("192.168.1.106", 3773);
+			socket = new Socket("192.168.117.46", 3773);
 
 			// once connection is made, send it back to the gui
 			// gui.setSocket(socket);

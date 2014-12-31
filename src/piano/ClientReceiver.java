@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class ClientReceiver extends Thread
 {
-
 	private Socket socket;
 	private PianoGUI gui;
 	private ArrayList<Key> keys;
@@ -27,12 +26,10 @@ public class ClientReceiver extends Thread
 		try
 		{
 			// establish the connection
-			socket = new Socket("192.168.117.46", 3773);
+			// socket = new Socket("192.168.117.46", 3773);
+			socket = new Socket("localhost", 3773);
 
-			// once connection is made, send it back to the gui
-			// gui.setSocket(socket);
-
-			// can only have 1 instance of output stream, so sending it to gui cuz gui doesnt need the socket/in stream
+			// can only have 1 instance of output stream, so sending it to gui (gui doesnt need the socket/in stream)
 			gui.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
 
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream()); // should be the only in stream
@@ -46,7 +43,6 @@ public class ClientReceiver extends Thread
 			{
 				// http://stackoverflow.com/questions/2393179/streamcorruptedexception-invalid-type-code-ac
 				packet = (PianoPacket) in.readObject();
-				// System.out.println("ClientReceiver: key pos = " + packet.getKeyPosition() + " color = " + packet.getClientColor());
 				keys.get(packet.getKeyPosition()).play(packet.getClientColor());
 			}
 		}

@@ -30,20 +30,14 @@ public class Key
 		}
 	}
 
-	public void playSound()
-	{
-
-	}
-
 	public void play(Color color)
 	{
 		// change background for as as long as note plays
-		SoundThread s = new SoundThread(position + 60, gui.getSoundSettings()); //pass in pitch to play
+		SoundThread s = new SoundThread(position + Notes.C, gui.getChannel()); // pass in pitch to play
 		s.start();
 		setColor(color);
 		ActionListener action = new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -57,21 +51,17 @@ public class Key
 
 	public void sendPacket()
 	{
-
 		ObjectOutputStream oos;
 		try
 		{
 			oos = gui.getObjectOutputStream();
-			// System.out.println("Key: key pos = " + position + " color = " + gui.getClientColor());
 			oos.writeObject(new PianoPacket(position, gui.getClientColor()));
 			oos.flush();
-			// oos.close();
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	private void resetColor()
@@ -81,7 +71,6 @@ public class Key
 			pl.setBackground(pl.getPreferredColor());
 			pl.repaint();
 		}
-
 	}
 
 	public int getPosition()

@@ -24,7 +24,6 @@ public class ServerBroadcast extends Thread
 			try
 			{
 				PianoPacket packet = packets.take();
-
 				Iterator<ObjectOutputStream> iter = outStreams.iterator();
 
 				while (iter.hasNext())

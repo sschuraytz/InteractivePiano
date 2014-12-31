@@ -1,25 +1,31 @@
 package piano;
 
-public class SoundThread extends Thread {
+import javax.sound.midi.MidiChannel;
 
+public class SoundThread extends Thread
+{
 	private int pitch;
-	private SoundSettings settings;
+	private MidiChannel channel;
 
-	public SoundThread(int pitch, SoundSettings soundSettings) {
+	public SoundThread(int pitch, MidiChannel channel)
+	{
 		this.pitch = pitch;
-		settings = soundSettings;
+		this.channel = channel;
 	}
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		super.run();
-		settings.getChannels()[settings.getCHANNEL()].noteOn( pitch, settings.getVOLUME() );
-		try {
-			Thread.sleep( settings.getDURATION() );
-		} catch (InterruptedException e) {
+		channel.noteOn(pitch, SoundSettings.VOLUME);
+		try
+		{
+			Thread.sleep(SoundSettings.DURATION);
+		}
+		catch (InterruptedException e)
+		{
 			e.printStackTrace();
 		}
-		settings.getChannels()[settings.getCHANNEL()].noteOff( pitch );
+		channel.noteOff(pitch);
 	}
-
 }

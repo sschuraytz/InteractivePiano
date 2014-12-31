@@ -22,18 +22,15 @@ public class ServerReceiver extends Thread
 			while (true)
 			{
 				PianoPacket packet = (PianoPacket) in.readObject();
-				// System.out.println("ServerReceiver: key pos = " + packet.getKeyPosition() + " color = " + packet.getClientColor());
 				packets.add(packet);
 			}
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -22,36 +22,34 @@ public class PianoServer
 		ServerBroadcast broadcaster = new ServerBroadcast(pianoPackets, outStreams);
 		broadcaster.start();
 
+		Random gen = new Random();
 		while (true)
 		{
 			Socket socket = serverSocket.accept();
-			// send the client its color
-			Random gen = new Random();
-			Color color = new Color(gen.nextInt(256), gen.nextInt(256), gen.nextInt(256));
+
 			// You must instantiate one ObjectInputStream and one ObjectOutputStream per Socket.
 			// http://stackoverflow.com/questions/15986511/java-io-streamcorruptedexception-over-sockets
 			ObjectOutputStream out;
 			ObjectInputStream in;
 			try
 			{
-				out = new ObjectOutputStream(socket.getOutputStream());
-				out.writeObject(color); // give the client its clientColor
-				out.flush();
 				in = new ObjectInputStream(socket.getInputStream());
-
-				// add to list of outStreams
+				out = new ObjectOutputStream(socket.getOutputStream());
 				outStreams.add(out);
+
+				// give the client its clientColor
+				Color color = new Color(gen.nextInt(256), gen.nextInt(256), gen.nextInt(256));
+				out.writeObject(color);
+				out.flush();
 
 				// create a receiver for the socket
 				ServerReceiver reciever = new ServerReceiver(in, pianoPackets);
 				reciever.start();
-
 			}
 			catch (IOException e)
 			{
 				e.printStackTrace();
 			}
-
 		}
 	}
 }

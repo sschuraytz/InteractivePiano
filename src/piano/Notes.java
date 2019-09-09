@@ -3,6 +3,7 @@ package piano;
 public interface Notes
 {
 	public static final int C = 60;
+	public static final int lowC = C - 12;
 	public static final int D = 62;
 	public static final int E = 64;
 	public static final int F = 65;

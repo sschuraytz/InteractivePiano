@@ -33,7 +33,7 @@ public class Key
 	public void play(Color color)
 	{
 		// change background for as as long as note plays
-		SoundThread s = new SoundThread(position + Notes.C, gui.getChannel()); // pass in pitch to play
+		SoundThread s = new SoundThread(position + Notes.lowC, gui.getChannel()); // pass in pitch to play
 		s.start();
 		setColor(color);
 		ActionListener action = new ActionListener()

@@ -34,7 +34,7 @@ public class PianoGUI extends JFrame
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		add(bottom, BorderLayout.CENTER);
-		PianoLabel[] bottomRowLabels = new PianoLabel[13];
+		PianoLabel[] bottomRowLabels = new PianoLabel[KeyStats.NUM_KEYS];	//this was hard-coded; changed it.
 		initializeBottomLabels(bottom, bottomRowLabels);
 
 		ArrayList<Key> keys = new ArrayList<>();
@@ -69,7 +69,8 @@ public class PianoGUI extends JFrame
 			else
 			// black key
 			{
-				if (i != 5) // not skinny dude
+				//alternating btwn +8 & +6 - is there a way to automate the calculation of these numbers?
+				if (i != 5 && i != 13 && i !=19 && i != 27 && i != 33 && i != 41) // not skinny dude
 				{
 					k = new Key(new PianoLabel[] { topRowLabels[i] }, keys.size(), this);
 					topRowLabels[i].setKey(k);
@@ -85,7 +86,17 @@ public class PianoGUI extends JFrame
 		{
 			if ((i & 1) == 0) // whiteKey
 			{
-				bottomRowLabels[i] = new PianoLabel(new Dimension(i == 8 || i == 10 ? KeyStats.BOTTOM_FAT_WIDTH : KeyStats.BOTTOM_WHITE_WIDTH, KeyStats.BOTTOM_HEIGHT), Color.WHITE);
+				//+14 - is there a way to automate this?
+				if (i == 4 || i == 18 || i == 32) {
+					bottomRowLabels[i] = new PianoLabel(new Dimension(KeyStats.BOTTOM_FAT_WIDTH_2, KeyStats.BOTTOM_HEIGHT), Color.WHITE);
+				}
+				else
+				{
+				bottomRowLabels[i] = new PianoLabel(new Dimension(
+					i == 8 || i == 10 || i == 22 || i == 24 || i == 36 || i == 38 ? KeyStats.BOTTOM_FAT_WIDTH : KeyStats.BOTTOM_WHITE_WIDTH,
+					KeyStats.BOTTOM_HEIGHT),
+					Color.WHITE);
+				}
 				bottomRowLabels[i].addMouseListener(new KeyListener());
 			}
 			else
@@ -104,7 +115,7 @@ public class PianoGUI extends JFrame
 			{
 				topRowLabels[i] = new PianoLabel(new Dimension(KeyStats.TOP_WHITE_WIDTH, KeyStats.TOP_HEIGHT), Color.WHITE);
 			}
-			else if (i == 5) // skinny dude
+			else if (i == 5 || i == 13 || i == 19 || i == 27 || i == 33 || i == 41) // skinny dude
 			{
 				topRowLabels[i] = new PianoLabel(new Dimension(KeyStats.TOP_SKINNY_WIDTH, KeyStats.TOP_HEIGHT), Color.BLACK);
 			}

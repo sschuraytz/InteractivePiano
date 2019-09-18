@@ -18,6 +18,26 @@ public class PianoLabel extends JLabel
 		setBackground(preferredColor);
 	}
 
+	public PianoLabel(Color color) {
+		if (color == Color.WHITE || color == Color.BLACK) {
+			createKey(color);
+		}
+	}
+
+	private void createKey(Color color) {
+		Dimension dimension;
+		if (color == Color.WHITE) {
+			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.HEIGHT);
+		} else {
+			// TODO fix this
+			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.HEIGHT);
+		}
+		this.preferredColor = color;
+		setPreferredSize(dimension);
+		setOpaque(true);
+		setBackground(preferredColor);
+	}
+
 	public Key getKey()
 	{
 		return key;

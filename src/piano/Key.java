@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-
 import javax.swing.*;
 
 public class Key
@@ -43,7 +42,7 @@ public class Key
 		// change background for as as long as note plays
 		SoundThread s = new SoundThread(position + Notes.C, gui.getChannel()); // pass in pitch to play
 		s.start();
-		setColor(colors[position]);
+		setColor(colors[position % colors.length]);
 		ActionListener action = new ActionListener()
 		{
 			@Override

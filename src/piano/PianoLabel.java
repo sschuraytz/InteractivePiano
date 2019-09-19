@@ -11,23 +11,13 @@ public class PianoLabel extends JLabel
 	private Color preferredColor;// color of key when NOT clicked
 	private Dimension dimension;
 
-	public PianoLabel(Dimension dimension, Color preferredColor)
-	{
-		this.preferredColor = preferredColor;
-		this.dimension = dimension;
-		setPreferredSize(dimension);
-		setOpaque(true);
-		setBackground(preferredColor);
-	}
-
 	public PianoLabel(Color color) {
-		setLayout(null);
 		if (color == Color.WHITE || color == Color.BLACK) {
-			createKey(color);
+			createPianoLabel(color);
 		}
 	}
 
-	private void createKey(Color color) {
+	private void createPianoLabel(Color color) {
 		Dimension dimension;
 		if (color == Color.WHITE) {
 			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.FRAME_HEIGHT);

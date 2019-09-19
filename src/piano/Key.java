@@ -25,10 +25,13 @@ public class Key
 
 	public void setColor(Color color)
 	{
-		int layer = layeredPane.getLayer(pianoLabel);
 		pianoLabel.setBackground(color);
-		layeredPane.setLayer(pianoLabel, layer);
 		pianoLabel.repaint();
+		if (pianoLabel.getPreferredColor() == Color.BLACK) {
+			layeredPane.moveToFront(pianoLabel);
+		} else {
+			layeredPane.moveToBack(pianoLabel);
+		}
 	}
 
 	public void play(Color color)
@@ -67,15 +70,12 @@ public class Key
 
 	private void resetColor()
 	{
-		int layer = layeredPane.getLayer(pianoLabel);
 		pianoLabel.setBackground(pianoLabel.getPreferredColor());
-		layeredPane.setLayer(pianoLabel, layer);
 		pianoLabel.repaint();
+		if (pianoLabel.getPreferredColor() == Color.BLACK) {
+			layeredPane.moveToFront(pianoLabel);
+		} else {
+			layeredPane.moveToBack(pianoLabel);
+		}
 	}
-
-	public int getPosition()
-	{
-		return position;
-	}
-
 }

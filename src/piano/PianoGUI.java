@@ -47,7 +47,7 @@ public class PianoGUI extends JFrame {
         for (int i = 0; i < KeyStats.NUM_WHITE_KEYS; i++) {
             PianoLabel pianoLabel = new PianoLabel(Color.WHITE);
             pianoLabel.setLocation(placement, 0);
-            setPianoLabelSizeandListener(pianoLabel);
+            setPianoLabelSizeAndListener(pianoLabel);
 
             root.add(pianoLabel, 0);
             addKeyToList(pianoLabel, root);
@@ -62,7 +62,7 @@ public class PianoGUI extends JFrame {
             for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
                 PianoLabel pianoLabel = new PianoLabel(Color.BLACK);
                 pianoLabel.setLocation(placement, 0);
-                setPianoLabelSizeandListener(pianoLabel);
+                setPianoLabelSizeAndListener(pianoLabel);
 
                 root.add(pianoLabel, 1);
                 addKeyToList(pianoLabel, root);
@@ -77,7 +77,7 @@ public class PianoGUI extends JFrame {
         }
     }
 
-    private void setPianoLabelSizeandListener(PianoLabel pianoLabel) {
+    private void setPianoLabelSizeAndListener(PianoLabel pianoLabel) {
         pianoLabel.setSize(pianoLabel.getDimension());
         pianoLabel.addMouseListener(new KeyListener());
     }

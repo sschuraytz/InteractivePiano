@@ -88,12 +88,12 @@ public class PianoGUI extends JFrame
 			{
 				//+14 - is there a way to automate this?
 				if (i == 4 || i == 18 || i == 32) {
-					bottomRowLabels[i] = new PianoLabel(new Dimension(KeyStats.BOTTOM_FAT_WIDTH_2, KeyStats.BOTTOM_HEIGHT), Color.WHITE);
+					bottomRowLabels[i] = new PianoLabel(new Dimension(KeyStats.BOTTOM_WIDE_WIDTH, KeyStats.BOTTOM_HEIGHT), Color.WHITE);
 				}
 				else
 				{
 				bottomRowLabels[i] = new PianoLabel(new Dimension(
-					i == 8 || i == 10 || i == 22 || i == 24 || i == 36 || i == 38 ? KeyStats.BOTTOM_FAT_WIDTH : KeyStats.BOTTOM_WHITE_WIDTH,
+					i == 8 || i == 10 || i == 22 || i == 24 || i == 36 || i == 38 ? KeyStats.BOTTOM_EXTRA_WIDE_WIDTH : KeyStats.BOTTOM_WHITE_WIDTH,
 					KeyStats.BOTTOM_HEIGHT),
 					Color.WHITE);
 				}

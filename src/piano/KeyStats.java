@@ -16,10 +16,10 @@ public interface KeyStats
 	public static final int TOP_HEIGHT = 448;
 	public static final int BOTTOM_HEIGHT = 256;
 
-	int FRAME_WIDTH = 1600; // TODO fix error where last black get cut off (frame width 750, 2 octaves)
+	int FRAME_WIDTH = 750; // TODO fix error where last black get cut off (frame width 750, 2 octaves)
 	int FRAME_HEIGHT = 704;
 
-	int OCTAVES = 7;
+	int OCTAVES = 1;
 	int OCTAVE_WIDTH = FRAME_WIDTH / OCTAVES;
 
 	int NUM_WHITE_KEYS_IN_OCTAVE = 7;

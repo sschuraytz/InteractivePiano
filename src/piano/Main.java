@@ -1,8 +1,16 @@
 package piano;
 
+import javax.sound.midi.MidiUnavailableException;
+
 public class Main {
     public static void main(String[] args) {
-        PianoGUI2 frame = new PianoGUI2();
-        frame.setVisible(true);
+        try {
+            PianoGUI frame = new PianoGUI();
+            frame.setVisible(true);
+            frame.playIntro();
+        } catch (MidiUnavailableException exc) {
+            exc.printStackTrace();
+        }
+
     }
 }

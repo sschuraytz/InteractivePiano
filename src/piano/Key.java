@@ -6,28 +6,29 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class Key
 {
-	private PianoLabel[] pianoLabels;
+	private PianoLabel pianoLabel;
 	private int position;
 	private PianoGUI gui;
+	private JLayeredPane layeredPane;
 
-	public Key(PianoLabel[] pianoLabels, int position, PianoGUI gui)
+	public Key(PianoLabel pianoLabel, int position, PianoGUI gui, JLayeredPane layeredPane)
 	{
-		this.pianoLabels = pianoLabels;
+		this.pianoLabel = pianoLabel;
 		this.position = position;
 		this.gui = gui;
+		this.layeredPane = layeredPane;
 	}
 
 	public void setColor(Color color)
 	{
-		for (PianoLabel pl : pianoLabels)
-		{
-			pl.setBackground(color);
-			pl.repaint();
-		}
+		int layer = layeredPane.getLayer(pianoLabel);
+		pianoLabel.setBackground(color);
+		layeredPane.setLayer(pianoLabel, layer);
+		pianoLabel.repaint();
 	}
 
 	public void play(Color color)
@@ -66,11 +67,10 @@ public class Key
 
 	private void resetColor()
 	{
-		for (PianoLabel pl : pianoLabels)
-		{
-			pl.setBackground(pl.getPreferredColor());
-			pl.repaint();
-		}
+		int layer = layeredPane.getLayer(pianoLabel);
+		pianoLabel.setBackground(pianoLabel.getPreferredColor());
+		layeredPane.setLayer(pianoLabel, layer);
+		pianoLabel.repaint();
 	}
 
 	public int getPosition()

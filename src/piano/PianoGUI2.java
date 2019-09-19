@@ -11,7 +11,8 @@ public class PianoGUI2 extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JLayeredPane root = new JLayeredPane();
-        root.setBackground(Color.BLACK); // TODO find out why this isn't working
+        root.setBackground(Color.BLACK);
+        root.setOpaque(true);
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         addWhiteKeys(root);
         addBlackKeys(root);

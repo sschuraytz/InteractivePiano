@@ -16,8 +16,6 @@ import javax.swing.JPanel;
 
 public class PianoGUI extends JFrame
 {
-	private Color clientColor; // sent by server - randomly generated int
-	private ObjectOutputStream out;
 	private MidiChannel channel;
 
 	public PianoGUI() throws MidiUnavailableException
@@ -48,10 +46,6 @@ public class PianoGUI extends JFrame
 		Synthesizer synth = MidiSystem.getSynthesizer();
 		synth.open();
 		channel = synth.getChannels()[SoundSettings.CHANNEL];
-
-		// outStream remains null until a connection is made
-		ClientReceiver conn = new ClientReceiver(this, keys);
-		conn.start();
 	}
 
 	private void linkLabelsToKeys(PianoLabel[] topRowLabels, PianoLabel[] bottomRowLabels, ArrayList<Key> keys)
@@ -119,16 +113,6 @@ public class PianoGUI extends JFrame
 		}
 	}
 
-	public Color getClientColor()
-	{
-		return clientColor;
-	}
-
-	public void setClientColor(Color clientColor)
-	{
-		this.clientColor = clientColor;
-	}
-
 	public static void main(String[] args)
 	{
 		PianoGUI gui;
@@ -167,16 +151,6 @@ public class PianoGUI extends JFrame
 		{
 			e.printStackTrace();
 		}
-	}
-
-	public void setObjectOutputStream(ObjectOutputStream objectOutputStream)
-	{
-		out = objectOutputStream;
-	}
-
-	public ObjectOutputStream getObjectOutputStream()
-	{
-		return out;
 	}
 
 	public MidiChannel getChannel()

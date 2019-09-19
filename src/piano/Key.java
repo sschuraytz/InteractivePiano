@@ -34,7 +34,7 @@ public class Key
 		}
 	}
 
-	public void play(Color color)
+	public void play()
 	{
 		// change background for as as long as note plays
 		SoundThread s = new SoundThread(position + Notes.C, gui.getChannel()); // pass in pitch to play
@@ -53,21 +53,6 @@ public class Key
 		t.start();
 	}
 
-	public void sendPacket()
-	{
-		ObjectOutputStream oos;
-		try
-		{
-			oos = gui.getObjectOutputStream();
-			oos.writeObject(new PianoPacket(position, gui.getClientColor()));
-			oos.flush();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 	private void resetColor()
 	{
 		for (PianoLabel pl : pianoLabels)
@@ -76,10 +61,4 @@ public class Key
 			pl.repaint();
 		}
 	}
-
-	public int getPosition()
-	{
-		return position;
-	}
-
 }

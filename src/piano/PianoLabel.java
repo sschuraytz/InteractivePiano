@@ -27,10 +27,9 @@ public class PianoLabel extends JLabel
 	private void createKey(Color color) {
 		Dimension dimension;
 		if (color == Color.WHITE) {
-			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.HEIGHT);
+			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.FRAME_HEIGHT);
 		} else {
-			// TODO fix this
-			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.HEIGHT);
+			dimension = new Dimension(KeyStats.BLACK_WIDTH, KeyStats.BLACK_HEIGHT);
 		}
 		this.preferredColor = color;
 		setPreferredSize(dimension);

@@ -7,7 +7,7 @@ public class PianoGUI2 extends JFrame {
 
     public PianoGUI2() {
         setTitle("MY PIANO");
-        setSize(KeyStats.WIDTH, KeyStats.HEIGHT);
+        setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JPanel root = new JPanel();

@@ -1,150 +1,105 @@
 package piano;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class PianoGUI extends JFrame
 {
-	private Color clientColor; // sent by server - randomly generated int
-	private ObjectOutputStream out;
-	private MidiChannel channel;
+    private MidiChannel channel;
+    private ArrayList<Key> keys;
 
-	public PianoGUI() throws MidiUnavailableException
-	{
-		this.setTitle("MY PIANO");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public PianoGUI() throws MidiUnavailableException
+    {
+        this.setTitle("MY PIANO");
+        setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		JPanel top = new JPanel();
-		top.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		add(top, BorderLayout.NORTH);
-		PianoLabel[] topRowLabels = new PianoLabel[KeyStats.NUM_KEYS];
-		initializeTopLabels(top, topRowLabels);
+        keys = new ArrayList<>();
 
-		JPanel bottom = new JPanel();
-		bottom.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		add(bottom, BorderLayout.CENTER);
-		PianoLabel[] bottomRowLabels = new PianoLabel[13];
-		initializeBottomLabels(bottom, bottomRowLabels);
-
-		ArrayList<Key> keys = new ArrayList<>();
-		linkLabelsToKeys(topRowLabels, bottomRowLabels, keys);
-
-		setResizable(false);
-		pack();
-		this.setLocationRelativeTo(null);
+        JLayeredPane root = new JLayeredPane();
+        root.setBackground(Color.BLACK);
+        root.setOpaque(true);
+        // TODO if octaves == 7, set up full piano board with extra keys on both sides
+        PianoLabel[] whiteLabels = addWhitePianoLabels(root);
+        PianoLabel[][] blackLabels = addBlackPianoLabels(root);
+        linkKeysToLabel(whiteLabels, blackLabels, root);
+        setContentPane(root);
 
 		// setting up sound
 		Synthesizer synth = MidiSystem.getSynthesizer();
 		synth.open();
 		channel = synth.getChannels()[SoundSettings.CHANNEL];
-
-		// outStream remains null until a connection is made
-		ClientReceiver conn = new ClientReceiver(this, keys);
-		conn.start();
 	}
 
-	private void linkLabelsToKeys(PianoLabel[] topRowLabels, PianoLabel[] bottomRowLabels, ArrayList<Key> keys)
-	{
-		Key k;
-		for (int i = 0; i < KeyStats.NUM_KEYS; i++)
-		{
-			if ((i & 1) == 0) // white key
-			{
-				k = new Key(new PianoLabel[] { topRowLabels[i], bottomRowLabels[i] }, keys.size(), this);
-				topRowLabels[i].setKey(k);
-				bottomRowLabels[i].setKey(k);
-				keys.add(k);
-			}
-			else
-			// black key
-			{
-				if (i != 5) // not skinny dude
-				{
-					k = new Key(new PianoLabel[] { topRowLabels[i] }, keys.size(), this);
-					topRowLabels[i].setKey(k);
-					keys.add(k);
-				}
-			}
-		}
-	}
+    private PianoLabel[] addWhitePianoLabels(JLayeredPane root) {
+        PianoLabel[] whiteLabels = new PianoLabel[KeyStats.NUM_WHITE_KEYS];
+        int placement = KeyStats.SPACE_BETWEEN_WHITE_KEYS;
+        for (int i = 0; i < KeyStats.NUM_WHITE_KEYS; i++) {
+            PianoLabel pianoLabel = new PianoLabel(Color.WHITE);
+            pianoLabel.setLocation(placement, 0);
+            setPianoLabelSizeAndListener(pianoLabel);
+            root.add(pianoLabel, 0);
+            whiteLabels[i] = pianoLabel;
 
-	private void initializeBottomLabels(JPanel bottom, PianoLabel[] bottomRowLabels)
-	{
-		for (int i = 0; i < KeyStats.NUM_KEYS; i++)
-		{
-			if ((i & 1) == 0) // whiteKey
-			{
-				bottomRowLabels[i] = new PianoLabel(new Dimension(i == 8 || i == 10 ? KeyStats.BOTTOM_FAT_WIDTH : KeyStats.BOTTOM_WHITE_WIDTH, KeyStats.BOTTOM_HEIGHT), Color.WHITE);
-				bottomRowLabels[i].addMouseListener(new KeyListener());
-			}
-			else
-			{
-				bottomRowLabels[i] = new PianoLabel(new Dimension(KeyStats.BOTTOM_SKINNY_WIDTH, KeyStats.BOTTOM_HEIGHT), Color.BLACK);
-			}
-			bottom.add(bottomRowLabels[i]);
-		}
-	}
+            placement += KeyStats.WHITE_WIDTH + KeyStats.SPACE_BETWEEN_WHITE_KEYS;
+        }
+        return whiteLabels;
+    }
 
-	private void initializeTopLabels(JPanel top, PianoLabel[] topRowLabels)
-	{
-		for (int i = 0; i < KeyStats.NUM_KEYS; i++)
-		{
-			if ((i & 1) == 0) // white
-			{
-				topRowLabels[i] = new PianoLabel(new Dimension(KeyStats.TOP_WHITE_WIDTH, KeyStats.TOP_HEIGHT), Color.WHITE);
-			}
-			else if (i == 5) // skinny dude
-			{
-				topRowLabels[i] = new PianoLabel(new Dimension(KeyStats.TOP_SKINNY_WIDTH, KeyStats.TOP_HEIGHT), Color.BLACK);
-			}
-			else
-			// black
-			{
-				topRowLabels[i] = new PianoLabel(new Dimension(KeyStats.TOP_BLACK_WIDTH, KeyStats.TOP_HEIGHT), Color.BLACK);
-			}
+    private PianoLabel[][] addBlackPianoLabels(JLayeredPane root) {
+        PianoLabel[][] blackLabels = new PianoLabel[KeyStats.OCTAVES][KeyStats.NUM_BLACK_KEYS_IN_OCTAVE];
+        int placement = KeyStats.FIRST_BLACK;
+        for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
+            for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
+                PianoLabel pianoLabel = new PianoLabel(Color.BLACK);
+                pianoLabel.setLocation(placement, 0);
+                setPianoLabelSizeAndListener(pianoLabel);
+                root.add(pianoLabel, 1);
+                blackLabels[octave][blackKey] = pianoLabel;
 
-			topRowLabels[i].addMouseListener(new KeyListener());
-			top.add(topRowLabels[i]);
-		}
-	}
+                if (blackKey == 1) {
+                    placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
+                } else if (blackKey != KeyStats.NUM_BLACK_KEYS_IN_OCTAVE - 1) {
+                    placement += KeyStats.BLACK_WIDTH + KeyStats.SPACE_BETWEEN_BLACK_KEYS;
+                }
+            }
+            placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
+        }
+        return blackLabels;
+    }
 
-	public Color getClientColor()
-	{
-		return clientColor;
-	}
+    private void setPianoLabelSizeAndListener(PianoLabel pianoLabel) {
+        pianoLabel.setSize(pianoLabel.getDimension());
+        pianoLabel.addMouseListener(new KeyListener());
+    }
 
-	public void setClientColor(Color clientColor)
-	{
-		this.clientColor = clientColor;
-	}
+    private void linkKeysToLabel(PianoLabel[] whiteLabels, PianoLabel[][] blackLabels, JLayeredPane layeredPane) {
+        int whiteIndex = 0;
+        for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
+            for (int blackIndex = 0; blackIndex < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackIndex++) {
+                keyToLabel(whiteLabels[whiteIndex++], layeredPane);
+                if (blackIndex == 2) {
+                    keyToLabel(whiteLabels[whiteIndex++], layeredPane);
 
-	public static void main(String[] args)
-	{
-		PianoGUI gui;
-		try
-		{
-			gui = new PianoGUI();
-			gui.setVisible(true);
-			gui.playIntro();
-		}
-		catch (MidiUnavailableException e)
-		{
-			e.printStackTrace();
-		}
-	}
+                }
+                keyToLabel(blackLabels[octave][blackIndex], layeredPane);
+            }
+            keyToLabel(whiteLabels[whiteIndex++], layeredPane);
+        }
+    }
 
-	private void playIntro()
+    private void keyToLabel(PianoLabel pianoLabel, JLayeredPane layeredPane) {
+        Key key = new Key(pianoLabel, keys.size(), this, layeredPane);
+        pianoLabel.setKey(key);
+        keys.add(key);
+    }
+
+	public void playIntro()
 	{
 		try
 		{
@@ -167,16 +122,6 @@ public class PianoGUI extends JFrame
 		{
 			e.printStackTrace();
 		}
-	}
-
-	public void setObjectOutputStream(ObjectOutputStream objectOutputStream)
-	{
-		out = objectOutputStream;
-	}
-
-	public ObjectOutputStream getObjectOutputStream()
-	{
-		return out;
 	}
 
 	public MidiChannel getChannel()

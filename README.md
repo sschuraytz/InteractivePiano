@@ -1,4 +1,10 @@
 InteractivePiano
 ================
 
-Multi-client piano app written by Miriam, Aviva, and Sarah Bracha
+Piano Synthesizer code written for MCO-364 with students:
+
+Ayelet Buchen https://github.com/ayeletbuchen
+
+Sarah Bracha Schuraytz https://github.com/sschuraytz
+
+Original Multi-client piano app written by Miriam and Aviva

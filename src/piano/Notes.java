@@ -2,11 +2,11 @@ package piano;
 
 public interface Notes
 {
-	public static final int C = 60;
-	public static final int D = 62;
-	public static final int E = 64;
-	public static final int F = 65;
-	public static final int G = 67;
-	public static final int A = 69;
-	public static final int B = 71;
+	int C = 60;
+	int D = 62;
+	int E = 64;
+	int F = 65;
+	int G = 67;
+	int A = 69;
+	int B = 71;
 }

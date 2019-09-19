@@ -3,6 +3,7 @@ package piano;
 public interface Notes
 {
 	int C = 60;
+	int startingC = C - (KeyStats.OCTAVES/2 * 12);
 	int D = 62;
 	int E = 64;
 	int F = 65;

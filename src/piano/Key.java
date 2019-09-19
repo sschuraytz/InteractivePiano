@@ -40,17 +40,10 @@ public class Key
 	public void play(Color color)
 	{
 		// change background for as as long as note plays
-		SoundThread s = new SoundThread(position + Notes.C, gui.getChannel()); // pass in pitch to play
+		SoundThread s = new SoundThread(position + Notes.startingC, gui.getChannel()); // pass in pitch to play
 		s.start();
 		setColor(colors[position % colors.length]);
-		ActionListener action = new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				resetColor();
-			}
-		};
+		ActionListener action = e -> resetColor();
 
 		Timer t = new Timer(1000, action);
 		t.start();

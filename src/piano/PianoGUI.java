@@ -1,25 +1,26 @@
 package piano;
 
+import java.awt.Color;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
 import javax.swing.*;
-import java.awt.*;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
-public class PianoGUI extends JFrame {
-
-    private ArrayList<Key> keys;
+public class PianoGUI extends JFrame
+{
     private Color clientColor; // sent by server - randomly generated int
     private ObjectOutputStream out;
     private MidiChannel channel;
+    private ArrayList<Key> keys;
 
-    public PianoGUI() throws MidiUnavailableException {
-        setTitle("MY PIANO");
+    public PianoGUI() throws MidiUnavailableException
+    {
+        this.setTitle("MY PIANO");
         setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         keys = new ArrayList<>();
 
@@ -29,7 +30,6 @@ public class PianoGUI extends JFrame {
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         addWhitePianoLabels(root);
         addBlackPianoLabels(root);
-
         setContentPane(root);
 
         // setting up sound
@@ -50,7 +50,7 @@ public class PianoGUI extends JFrame {
             setPianoLabelSizeAndListener(pianoLabel);
 
             root.add(pianoLabel, 0);
-            addKeyToList(pianoLabel, root);
+            linkKeyToLabel(pianoLabel, root);
 
             placement += KeyStats.WHITE_WIDTH + KeyStats.SPACE_BETWEEN_WHITE_KEYS;
         }
@@ -65,7 +65,7 @@ public class PianoGUI extends JFrame {
                 setPianoLabelSizeAndListener(pianoLabel);
 
                 root.add(pianoLabel, 1);
-                addKeyToList(pianoLabel, root);
+                linkKeyToLabel(pianoLabel, root);
 
                 if (blackKey == 1) {
                     placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
@@ -82,7 +82,7 @@ public class PianoGUI extends JFrame {
         pianoLabel.addMouseListener(new KeyListener());
     }
 
-    private void addKeyToList(PianoLabel pianoLabel, JLayeredPane layeredPane) {
+    private void linkKeyToLabel(PianoLabel pianoLabel, JLayeredPane layeredPane) {
         Key key = new Key(pianoLabel, keys.size(), this, layeredPane);
         pianoLabel.setKey(key);
         keys.add(key);

@@ -1,4 +1,4 @@
 InteractivePiano
 ================
 
-Multi-client piano app written by Miriam and Aviva
+Multi-client piano app written by Miriam and Aviva and Helen

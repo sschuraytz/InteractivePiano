@@ -1,7 +1,6 @@
 package piano;
 
 import java.awt.Color;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -11,8 +10,6 @@ import javax.swing.*;
 
 public class PianoGUI extends JFrame
 {
-    private Color clientColor; // sent by server - randomly generated int
-    private ObjectOutputStream out;
     private MidiChannel channel;
     private ArrayList<Key> keys;
 
@@ -33,15 +30,11 @@ public class PianoGUI extends JFrame
         linkKeysToLabel(whiteLabels, blackLabels, root);
         setContentPane(root);
 
-        // setting up sound
-        Synthesizer synth = MidiSystem.getSynthesizer();
-        synth.open();
-        channel = synth.getChannels()[SoundSettings.CHANNEL];
-
-        // outStream remains null until a connection is made
-        ClientReceiver conn = new ClientReceiver(this, keys);
-        conn.start();
-    }
+		// setting up sound
+		Synthesizer synth = MidiSystem.getSynthesizer();
+		synth.open();
+		channel = synth.getChannels()[SoundSettings.CHANNEL];
+	}
 
     private PianoLabel[] addWhitePianoLabels(JLayeredPane root) {
         PianoLabel[] whiteLabels = new PianoLabel[KeyStats.NUM_WHITE_KEYS];
@@ -106,53 +99,33 @@ public class PianoGUI extends JFrame
         keys.add(key);
     }
 
-    public Color getClientColor()
-    {
-        return clientColor;
-    }
+	public void playIntro()
+	{
+		try
+		{
+			int[] notes = { Notes.C, Notes.D, Notes.E, Notes.F, Notes.G, Notes.A, Notes.B };
+			for (int i = 0; i < notes.length; ++i)
+			{
+				channel.noteOn(notes[i], SoundSettings.VOLUME);
+				Thread.sleep(100);
+				channel.noteOff(notes[i]);
+			}
+			// Play a C major chord.
+			channel.noteOn(Notes.C, SoundSettings.VOLUME);
+			channel.noteOn(Notes.E, SoundSettings.VOLUME);
+			channel.noteOn(Notes.G, SoundSettings.VOLUME);
+			Thread.sleep(3000);
+			channel.allNotesOff();
+			Thread.sleep(500);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
-    public void setClientColor(Color clientColor)
-    {
-        this.clientColor = clientColor;
-    }
-
-    public void playIntro()
-    {
-        try
-        {
-            int[] notes = { Notes.C, Notes.D, Notes.E, Notes.F, Notes.G, Notes.A, Notes.B };
-            for (int i = 0; i < notes.length; ++i)
-            {
-                channel.noteOn(notes[i], SoundSettings.VOLUME);
-                Thread.sleep(100);
-                channel.noteOff(notes[i]);
-            }
-            // Play a C major chord.
-            channel.noteOn(Notes.C, SoundSettings.VOLUME);
-            channel.noteOn(Notes.E, SoundSettings.VOLUME);
-            channel.noteOn(Notes.G, SoundSettings.VOLUME);
-            Thread.sleep(3000);
-            channel.allNotesOff();
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void setObjectOutputStream(ObjectOutputStream objectOutputStream)
-    {
-        out = objectOutputStream;
-    }
-
-    public ObjectOutputStream getObjectOutputStream()
-    {
-        return out;
-    }
-
-    public MidiChannel getChannel()
-    {
-        return channel;
-    }
+	public MidiChannel getChannel()
+	{
+		return channel;
+	}
 }

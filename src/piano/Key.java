@@ -2,8 +2,6 @@ package piano;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 public class Key
@@ -28,7 +26,6 @@ public class Key
 	public void setColor(Color color)
 	{
 		pianoLabel.setBackground(color);
-		pianoLabel.repaint();
 		if (pianoLabel.getPreferredColor() == Color.BLACK) {
 			layeredPane.moveToFront(pianoLabel);
 		} else {
@@ -51,7 +48,6 @@ public class Key
 	private void resetColor()
 	{
 		pianoLabel.setBackground(pianoLabel.getPreferredColor());
-		pianoLabel.repaint();
 		if (pianoLabel.getPreferredColor() == Color.BLACK) {
 			layeredPane.moveToFront(pianoLabel);
 		} else {

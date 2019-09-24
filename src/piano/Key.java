@@ -5,7 +5,7 @@ public class Key
 	private int pitch;
 	private PianoGUI gui;
 
-	public Key(int position, PianoGUI gui)
+	public Key(int position, PianoGUI gui) // TODO fix this to reference a channel, not a gui
 	{
 		pitch = position + Notes.startingC;
 		this.gui = gui;

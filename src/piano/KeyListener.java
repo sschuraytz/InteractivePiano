@@ -34,7 +34,7 @@ public class KeyListener implements MouseListener
 	{
 		PianoLabel pianoLabel = (PianoLabel) arg0.getSource();
 		pianoLabel.setColorToOnClickColor();
-		gui.setLevel(pianoLabel);
+		gui.setLevel(pianoLabel); // TODO stop level from changing on color change
 		pianoLabel.getKey().play();
 	}
 

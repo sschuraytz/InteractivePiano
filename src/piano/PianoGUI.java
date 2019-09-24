@@ -10,7 +10,6 @@ import javax.swing.*;
 public class PianoGUI extends JFrame
 {
     private MidiChannel channel;
-    private PianoLabel[] pianoLabels;
     private Colors colors;
     private JLayeredPane root;
 
@@ -20,7 +19,6 @@ public class PianoGUI extends JFrame
         setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        pianoLabels = new PianoLabel[KeyStats.NUM_KEYS];
         colors = new Colors();
         root = new JLayeredPane();
 
@@ -46,7 +44,6 @@ public class PianoGUI extends JFrame
                 PianoLabel pianoLabel = new PianoLabel(Color.WHITE, colors.getColor(index));
                 pianoLabel.setLocation(placement, 0);
                 setPianoLabelSizeAndListener(pianoLabel);
-                pianoLabels[index] = pianoLabel;
                 keyToLabel(pianoLabel, index);
                 root.add(pianoLabel, 0);
 
@@ -70,21 +67,18 @@ public class PianoGUI extends JFrame
                 PianoLabel pianoLabel = new PianoLabel(Color.BLACK, colors.getColor(index));
                 pianoLabel.setLocation(placement, 0);
                 setPianoLabelSizeAndListener(pianoLabel);
-                pianoLabels[index] = pianoLabel;
                 keyToLabel(pianoLabel, index);
                 root.add(pianoLabel, 1);
 
 
-                if (blackKey == 1) {
+                if (blackKey == 1 || blackKey == KeyStats.NUM_BLACK_KEYS_IN_OCTAVE - 1) {
                     placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
                     index +=3;
-                } else if (blackKey != KeyStats.NUM_BLACK_KEYS_IN_OCTAVE - 1) {
+                } else {
                     placement += KeyStats.BLACK_WIDTH + KeyStats.SPACE_BETWEEN_BLACK_KEYS;
-                    index += 2; // TODO check out if this else if is necessary, can we just make it one else and remove placement += below?
+                    index += 2;
                 }
             }
-            placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
-            index += 3;
         }
     }
 

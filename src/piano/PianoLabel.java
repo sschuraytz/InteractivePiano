@@ -8,27 +8,28 @@ import javax.swing.JLabel;
 public class PianoLabel extends JLabel
 {
 	private Key key;
-	private Color preferredColor;// color of key when NOT clicked
+	private Color defaultColor; // color of key when NOT clicked
+	private Color colorOnClick; // color of key when clicked
 	private Dimension dimension;
 
-	public PianoLabel(Color color) {
-		if (color == Color.WHITE || color == Color.BLACK) {
-			createPianoLabel(color);
+
+	public PianoLabel(Color defaultColor, Color colorOnClick) {
+		if (defaultColor == Color.WHITE || defaultColor == Color.BLACK) {
+			createPianoLabel(defaultColor, colorOnClick);
 		}
 	}
 
-	private void createPianoLabel(Color color) {
-		Dimension dimension;
-		if (color == Color.WHITE) {
+	private void createPianoLabel(Color defaultColor, Color onClickColor) {
+		if (defaultColor == Color.WHITE) {
 			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.FRAME_HEIGHT);
 		} else {
 			dimension = new Dimension(KeyStats.BLACK_WIDTH, KeyStats.BLACK_HEIGHT);
 		}
-		this.preferredColor = color;
-		this.dimension = dimension;
+		this.defaultColor = defaultColor;
+		this.colorOnClick = onClickColor;
 		setPreferredSize(dimension);
 		setOpaque(true);
-		setBackground(preferredColor);
+		setBackground(defaultColor);
 	}
 
 	public Key getKey()
@@ -41,12 +42,19 @@ public class PianoLabel extends JLabel
 		this.key = k;
 	}
 
-	public Color getPreferredColor()
-	{
-		return preferredColor;
-	}
-
 	public Dimension getDimension() {
 		return dimension;
+	}
+
+	public Color getDefaultColor() {
+		return defaultColor;
+	}
+
+	public void setColorToDefaultColor() {
+		setBackground(defaultColor);
+	}
+
+	public void setColorToOnClickColor() {
+		setBackground(colorOnClick);
 	}
 }

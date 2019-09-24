@@ -1,7 +1,6 @@
 package piano;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -11,7 +10,9 @@ import javax.swing.*;
 public class PianoGUI extends JFrame
 {
     private MidiChannel channel;
-    private ArrayList<Key> keys;
+    private PianoLabel[] pianoLabels;
+    private Colors colors;
+    private JLayeredPane root;
 
     public PianoGUI() throws MidiUnavailableException
     {
@@ -19,15 +20,15 @@ public class PianoGUI extends JFrame
         setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        keys = new ArrayList<>();
+        pianoLabels = new PianoLabel[KeyStats.NUM_KEYS];
+        colors = new Colors();
+        root = new JLayeredPane();
 
-        JLayeredPane root = new JLayeredPane();
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
-        PianoLabel[] whiteLabels = addWhitePianoLabels(root);
-        PianoLabel[][] blackLabels = addBlackPianoLabels(root);
-        linkKeysToLabel(whiteLabels, blackLabels, root);
+        addWhitePianoLabels();
+        addBlackPianoLabels();
         setContentPane(root);
 
 		// setting up sound
@@ -36,67 +37,65 @@ public class PianoGUI extends JFrame
 		channel = synth.getChannels()[SoundSettings.CHANNEL];
 	}
 
-    private PianoLabel[] addWhitePianoLabels(JLayeredPane root) {
-        PianoLabel[] whiteLabels = new PianoLabel[KeyStats.NUM_WHITE_KEYS];
+    private void addWhitePianoLabels() {
         int placement = KeyStats.SPACE_BETWEEN_WHITE_KEYS;
-        for (int i = 0; i < KeyStats.NUM_WHITE_KEYS; i++) {
-            PianoLabel pianoLabel = new PianoLabel(Color.WHITE);
-            pianoLabel.setLocation(placement, 0);
-            setPianoLabelSizeAndListener(pianoLabel);
-            root.add(pianoLabel, 0);
-            whiteLabels[i] = pianoLabel;
 
-            placement += KeyStats.WHITE_WIDTH + KeyStats.SPACE_BETWEEN_WHITE_KEYS;
-        }
-        return whiteLabels;
-    }
-
-    private PianoLabel[][] addBlackPianoLabels(JLayeredPane root) {
-        PianoLabel[][] blackLabels = new PianoLabel[KeyStats.OCTAVES][KeyStats.NUM_BLACK_KEYS_IN_OCTAVE];
-        int placement = KeyStats.FIRST_BLACK;
+        int index = 0;
         for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
-            for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
-                PianoLabel pianoLabel = new PianoLabel(Color.BLACK);
+            for (int whiteKey = 0; whiteKey < KeyStats.NUM_WHITE_KEYS_IN_OCTAVE; whiteKey++) {
+                PianoLabel pianoLabel = new PianoLabel(Color.WHITE, colors.getColor(index));
                 pianoLabel.setLocation(placement, 0);
                 setPianoLabelSizeAndListener(pianoLabel);
+                pianoLabels[index] = pianoLabel;
+                keyToLabel(pianoLabel, index);
+                root.add(pianoLabel, 0);
+
+
+                placement += KeyStats.WHITE_WIDTH + KeyStats.SPACE_BETWEEN_WHITE_KEYS;
+
+                if (whiteKey == 2 || whiteKey == KeyStats.NUM_WHITE_KEYS_IN_OCTAVE - 1) {
+                    index++;
+                } else {
+                    index += 2;
+                }
+            }
+        }
+    }
+
+    private void addBlackPianoLabels() {
+        int placement = KeyStats.FIRST_BLACK;
+        int index = 0;
+        for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
+            for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
+                PianoLabel pianoLabel = new PianoLabel(Color.BLACK, colors.getColor(index));
+                pianoLabel.setLocation(placement, 0);
+                setPianoLabelSizeAndListener(pianoLabel);
+                pianoLabels[index] = pianoLabel;
+                keyToLabel(pianoLabel, index);
                 root.add(pianoLabel, 1);
-                blackLabels[octave][blackKey] = pianoLabel;
+
 
                 if (blackKey == 1) {
                     placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
+                    index +=3;
                 } else if (blackKey != KeyStats.NUM_BLACK_KEYS_IN_OCTAVE - 1) {
                     placement += KeyStats.BLACK_WIDTH + KeyStats.SPACE_BETWEEN_BLACK_KEYS;
+                    index += 2; // TODO check out if this else if is necessary, can we just make it one else and remove placement += below?
                 }
             }
             placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
+            index += 3;
         }
-        return blackLabels;
     }
 
     private void setPianoLabelSizeAndListener(PianoLabel pianoLabel) {
         pianoLabel.setSize(pianoLabel.getDimension());
-        pianoLabel.addMouseListener(new KeyListener());
+        pianoLabel.addMouseListener(new KeyListener(this));
     }
 
-    private void linkKeysToLabel(PianoLabel[] whiteLabels, PianoLabel[][] blackLabels, JLayeredPane layeredPane) {
-        int whiteIndex = 0;
-        for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
-            for (int blackIndex = 0; blackIndex < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackIndex++) {
-                keyToLabel(whiteLabels[whiteIndex++], layeredPane);
-                if (blackIndex == 2) {
-                    keyToLabel(whiteLabels[whiteIndex++], layeredPane);
-
-                }
-                keyToLabel(blackLabels[octave][blackIndex], layeredPane);
-            }
-            keyToLabel(whiteLabels[whiteIndex++], layeredPane);
-        }
-    }
-
-    private void keyToLabel(PianoLabel pianoLabel, JLayeredPane layeredPane) {
-        Key key = new Key(pianoLabel, keys.size(), this, layeredPane);
+    private void keyToLabel(PianoLabel pianoLabel, int index) {
+        Key key = new Key(index, this);
         pianoLabel.setKey(key);
-        keys.add(key);
     }
 
 	public void playIntro()
@@ -128,4 +127,12 @@ public class PianoGUI extends JFrame
 	{
 		return channel;
 	}
+
+    public void setLevel(PianoLabel pianoLabel) {
+        if (pianoLabel.getDefaultColor() == Color.BLACK) {
+            root.moveToFront(pianoLabel);
+        } else {
+            root.moveToBack(pianoLabel);
+        }
+    }
 }

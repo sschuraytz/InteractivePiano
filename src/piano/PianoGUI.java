@@ -1,6 +1,6 @@
 package piano;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -12,6 +12,7 @@ public class PianoGUI extends JFrame
 {
     private MidiChannel channel;
     private ArrayList<Key> keys;
+    private Recorder recorder;
 
     public PianoGUI() throws MidiUnavailableException
     {
@@ -20,10 +21,12 @@ public class PianoGUI extends JFrame
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         keys = new ArrayList<>();
+        recorder = new Recorder();
 
         JLayeredPane root = new JLayeredPane();
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
+        
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         PianoLabel[] whiteLabels = addWhitePianoLabels(root);
         PianoLabel[][] blackLabels = addBlackPianoLabels(root);
@@ -34,6 +37,10 @@ public class PianoGUI extends JFrame
 		Synthesizer synth = MidiSystem.getSynthesizer();
 		synth.open();
 		channel = synth.getChannels()[SoundSettings.CHANNEL];
+
+
+		RecorderPanel recorderPanel = new RecorderPanel(recorder);
+		root.add(recorderPanel, 2);
 	}
 
     private PianoLabel[] addWhitePianoLabels(JLayeredPane root) {
@@ -75,7 +82,7 @@ public class PianoGUI extends JFrame
 
     private void setPianoLabelSizeAndListener(PianoLabel pianoLabel) {
         pianoLabel.setSize(pianoLabel.getDimension());
-        pianoLabel.addMouseListener(new KeyListener());
+        pianoLabel.addMouseListener(new KeyListener(recorder));
     }
 
     private void linkKeysToLabel(PianoLabel[] whiteLabels, PianoLabel[][] blackLabels, JLayeredPane layeredPane) {

@@ -64,7 +64,7 @@ public class PianoGUI extends JFrame
 
     private void addBlackPianoLabels() {
         int placement = KeyStats.FIRST_BLACK;
-        int index = 0;
+        int index = 1;
         for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
             for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
                 PianoLabel pianoLabel = new PianoLabel(Color.BLACK, colors.getColor(index));

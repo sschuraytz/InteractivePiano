@@ -2,19 +2,15 @@ package piano;
 
 import java.awt.Color;
 import javax.sound.midi.MidiChannel;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Synthesizer;
 import javax.swing.*;
 
-public class PianoGUI extends JFrame
-{
-    private MidiChannel channel;
+public class PianoGUI extends JFrame {
     private Colors colors;
     private JLayeredPane root;
+    private MidiChannel midiChannel;
 
-    public PianoGUI() throws MidiUnavailableException
-    {
+    public PianoGUI(MidiChannel midiChannel) {
+        this.midiChannel = midiChannel;
         this.setTitle("MY PIANO");
         setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -24,15 +20,13 @@ public class PianoGUI extends JFrame
 
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
+
+
+
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         addWhitePianoLabels();
         addBlackPianoLabels();
         setContentPane(root);
-
-		// setting up sound
-		Synthesizer synth = MidiSystem.getSynthesizer();
-		synth.open();
-		channel = synth.getChannels()[SoundSettings.CHANNEL];
 	}
 
     private void addWhitePianoLabels() {
@@ -88,39 +82,9 @@ public class PianoGUI extends JFrame
     }
 
     private void keyToLabel(PianoLabel pianoLabel, int index) {
-        Key key = new Key(index, this);
+        Key key = new Key(index, midiChannel);
         pianoLabel.setKey(key);
     }
-
-	public void playIntro()
-	{
-		try
-		{
-			int[] notes = { Notes.C, Notes.D, Notes.E, Notes.F, Notes.G, Notes.A, Notes.B };
-			for (int i = 0; i < notes.length; ++i)
-			{
-				channel.noteOn(notes[i], SoundSettings.VOLUME);
-				Thread.sleep(100);
-				channel.noteOff(notes[i]);
-			}
-			// Play a C major chord.
-			channel.noteOn(Notes.C, SoundSettings.VOLUME);
-			channel.noteOn(Notes.E, SoundSettings.VOLUME);
-			channel.noteOn(Notes.G, SoundSettings.VOLUME);
-			Thread.sleep(3000);
-			channel.allNotesOff();
-			Thread.sleep(500);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	public MidiChannel getChannel()
-	{
-		return channel;
-	}
 
     public void setLevel(PianoLabel pianoLabel) {
         if (pianoLabel.getDefaultColor() == Color.BLACK) {

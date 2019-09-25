@@ -1,19 +1,19 @@
 package piano;
 
+import javax.sound.midi.MidiChannel;
+
 public class Key
 {
 	private int pitch;
-	private PianoGUI gui;
+	private MidiChannel midiChannel;
 
-	public Key(int position, PianoGUI gui) // TODO fix this to reference a channel, not a gui
-	{
+	public Key(int position, MidiChannel midiChannel) {
 		pitch = position + Notes.startingC;
-		this.gui = gui;
+		this.midiChannel = midiChannel;
 	}
 
 	public void play() {
-		// change background for as as long as note plays
-		SoundThread s = new SoundThread(pitch, gui.getChannel()); // pass in pitch to play
+		SoundThread s = new SoundThread(pitch, midiChannel); // pass in pitch to play
 		s.start();
 	}
 }

@@ -1,6 +1,6 @@
 package piano;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -12,6 +12,7 @@ public class PianoGUI extends JFrame
 {
     private MidiChannel channel;
     private ArrayList<Key> keys;
+
 
     public PianoGUI() throws MidiUnavailableException
     {
@@ -28,6 +29,9 @@ public class PianoGUI extends JFrame
         PianoLabel[] whiteLabels = addWhitePianoLabels(root);
         PianoLabel[][] blackLabels = addBlackPianoLabels(root);
         linkKeysToLabel(whiteLabels, blackLabels, root);
+        JPanel instrumentsButtons = instrumentOptions(root);
+        root.setLayout(new BorderLayout());
+        root.add(instrumentsButtons, BorderLayout.SOUTH, 3);
         setContentPane(root);
 
 		// setting up sound
@@ -99,6 +103,43 @@ public class PianoGUI extends JFrame
         keys.add(key);
     }
 
+    private JPanel instrumentOptions (JLayeredPane root)
+    {
+        JPanel instrumentsButtons = new JPanel();
+        instrumentsButtons.setLayout(new FlowLayout());
+        JButton piano = new JButton("Piano");//program 0
+        instrumentsButtons.add(piano);
+        JButton xylophone = new JButton("Xylophone");//13
+        instrumentsButtons.add(xylophone);
+        JButton guitar = new JButton("Guitar");//24
+        instrumentsButtons.add(guitar);
+        JButton trumpet = new JButton("Trumpet");//56
+        instrumentsButtons.add(trumpet);
+        JButton flute = new JButton("Flute");//73
+        instrumentsButtons.add(flute);
+        JButton drum = new JButton("Drum");//32
+        instrumentsButtons.add(drum);
+        piano.addActionListener(e->{
+            setInstrument(0);
+        });
+        xylophone.addActionListener(e->{
+            setInstrument(14);
+        });
+        guitar.addActionListener(e->{
+            setInstrument(25);
+        });
+        trumpet.addActionListener(e->{
+            setInstrument(57);
+        });
+        flute.addActionListener(e->{
+            setInstrument(74);
+        });
+        drum.addActionListener(e->{
+            setInstrument(115);
+        });
+        return instrumentsButtons;
+    }
+
 	public void playIntro()
 	{
 		try
@@ -128,4 +169,8 @@ public class PianoGUI extends JFrame
 	{
 		return channel;
 	}
+
+	public void setInstrument(int instrument){
+        channel.programChange(instrument);
+    }
 }

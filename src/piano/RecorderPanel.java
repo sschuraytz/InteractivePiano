@@ -16,6 +16,9 @@ public class RecorderPanel extends JPanel
         BtnStartRecording = createStartRecordingBtn();
         BtnStopRecording = createStopRecordingBtn();
         BtnPlayBack = createPlaybackBtn();
+        add(BtnStartRecording);
+        add(BtnStopRecording);
+        add(BtnPlayBack);
     }
 
 
@@ -48,8 +51,8 @@ public class RecorderPanel extends JPanel
 
     private JButton createPlaybackBtn()
     {
-        JButton playBack = new JButton("Record");
-        playBack.setBackground(new Color(46, 177, 8));
+        JButton playBack = new JButton("Play Back");
+        playBack.setBackground(new Color(108, 63, 177));
         playBack.addActionListener(e -> {
             if (!recorder.getRecordedKeys().isEmpty())
             {

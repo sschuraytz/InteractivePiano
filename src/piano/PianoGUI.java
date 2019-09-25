@@ -26,11 +26,15 @@ public class PianoGUI extends JFrame
         JLayeredPane root = new JLayeredPane();
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
-        
+
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         PianoLabel[] whiteLabels = addWhitePianoLabels(root);
         PianoLabel[][] blackLabels = addBlackPianoLabels(root);
         linkKeysToLabel(whiteLabels, blackLabels, root);
+        RecorderPanel recorderPanel = new RecorderPanel(recorder);
+        recorderPanel.setSize(getWidth(), 100);
+
+        root.add(recorderPanel, 3);
         setContentPane(root);
 
 		// setting up sound
@@ -39,8 +43,7 @@ public class PianoGUI extends JFrame
 		channel = synth.getChannels()[SoundSettings.CHANNEL];
 
 
-		RecorderPanel recorderPanel = new RecorderPanel(recorder);
-		root.add(recorderPanel, 2);
+
 	}
 
     private PianoLabel[] addWhitePianoLabels(JLayeredPane root) {
@@ -48,7 +51,7 @@ public class PianoGUI extends JFrame
         int placement = KeyStats.SPACE_BETWEEN_WHITE_KEYS;
         for (int i = 0; i < KeyStats.NUM_WHITE_KEYS; i++) {
             PianoLabel pianoLabel = new PianoLabel(Color.WHITE);
-            pianoLabel.setLocation(placement, 0);
+            pianoLabel.setLocation(placement, 100);
             setPianoLabelSizeAndListener(pianoLabel);
             root.add(pianoLabel, 0);
             whiteLabels[i] = pianoLabel;
@@ -64,7 +67,7 @@ public class PianoGUI extends JFrame
         for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
             for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
                 PianoLabel pianoLabel = new PianoLabel(Color.BLACK);
-                pianoLabel.setLocation(placement, 0);
+                pianoLabel.setLocation(placement, 100);
                 setPianoLabelSizeAndListener(pianoLabel);
                 root.add(pianoLabel, 1);
                 blackLabels[octave][blackKey] = pianoLabel;

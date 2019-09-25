@@ -27,7 +27,7 @@ public class Recorder
 
     public void playBack() throws InterruptedException
     {
-        for (int ix = 0; ix <= recordedKeys.size(); ix++)
+        for (int ix = 0; ix < recordedKeys.size(); ix++)
         {
             if (ix > 0)
             {

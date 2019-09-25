@@ -31,11 +31,6 @@ public class PianoLabel extends JLabel
 		setBackground(defaultColor);
 	}
 
-	public Key getKey()
-	{
-		return key;
-	}
-
 	public void setKey(Key k)
 	{
 		this.key = k;
@@ -53,7 +48,12 @@ public class PianoLabel extends JLabel
 		setBackground(defaultColor);
 	}
 
-	public void setColorToOnClickColor() {
+	private void setColorToOnClickColor() {
 		setBackground(colorOnClick);
+	}
+
+	public void play() {
+		setColorToOnClickColor();
+		key.play();
 	}
 }

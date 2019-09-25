@@ -42,6 +42,7 @@ public class KeyListener implements MouseListener
 	public void mouseReleased(MouseEvent arg0)
 	{
 		PianoLabel pianoLabel = (PianoLabel) arg0.getSource();
+		// TODO make color stay on clicked color as long as key is still playing, even if key was already released
 		pianoLabel.setColorToDefaultColor();
 		gui.setLevel(pianoLabel);
 	}

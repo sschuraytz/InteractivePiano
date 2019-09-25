@@ -5,7 +5,7 @@ import java.awt.event.MouseListener;
 
 public class KeyListener implements MouseListener
 {
-	PianoGUI gui;
+	private PianoGUI gui;
 
 	public KeyListener(PianoGUI pianoGUI) {
 		this.gui = pianoGUI;

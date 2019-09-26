@@ -67,16 +67,9 @@ class RecorderPanel extends JPanel
         JButton playBack = new JButton("Play Back");
         playBack.setBackground(INACTIVE_COLOR);
         playBack.addActionListener(e -> {
-            if (!recorder.getRecordedKeys().isEmpty())
+            if (!recorder.getRecordedKeysInfo().isEmpty())
             {
-                try
-                {
-                    recorder.playBack();
-                }
-                catch (InterruptedException exc)
-                {
-                    exc.printStackTrace();
-                }
+                new Thread(() -> recorder.playBack()).start();
             }
         });
         return playBack;

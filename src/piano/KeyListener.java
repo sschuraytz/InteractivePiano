@@ -35,11 +35,6 @@ public class KeyListener implements MouseListener
 	{
 		PianoLabel pl = (PianoLabel) arg0.getSource();
 
-		//don't think this code goes in here...
-		/*if (isRecording)
-		{
-			recorder.append(pl.getKey(), System.currentTimeMillis());
-		}*/
 		Key currentKey = pl.getKey();
 		currentKey.play();
 

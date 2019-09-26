@@ -2,48 +2,54 @@ package piano;
 
 import java.util.ArrayList;
 
-public class Recorder
+class Recorder
 {
-    private ArrayList<Key> recordedKeys = new ArrayList<>();
-    private ArrayList<Long> timesPressed = new ArrayList<>();
+    private ArrayList<KeyPressedInfo> recordedKeysInfo = new ArrayList<>();
     private boolean isRecording;
 
-    public void append(Key keyPressed, long timePressed)
+    void append(Key keyPressed, long timePressed)
     {
-        recordedKeys.add(keyPressed);
-        timesPressed.add(timePressed);
+        recordedKeysInfo.add(new KeyPressedInfo(keyPressed, timePressed));
     }
 
-    public void playBack() throws InterruptedException
+    void playBack()
     {
-        for (int ix = 0; ix < recordedKeys.size(); ix++)
+        long waitTime;
+        for (int ix = 0; ix < recordedKeysInfo.size(); ix++)
         {
             if (ix > 0)
             {
-                Thread.sleep((timesPressed.get(ix) - timesPressed.get(ix - 1))); //how many seconds between presses
-                                                                                 //something's funny about this...
+                waitTime = recordedKeysInfo.get(ix).getTime() - recordedKeysInfo.get(ix - 1).getTime();
+                try
+                {
+                    Thread.sleep(waitTime);
+                }
+                catch (Exception exc)
+                {
+                    System.out.println(exc.getMessage());
+                }
             }
-            recordedKeys.get(ix).play(); //why doesn't playback show the colors?
+            recordedKeysInfo.get(ix).getKey().play();
         }
     }
 
-    public void setIsRecording(boolean isRecording)
+    void setIsRecording(boolean isRecording)
     {
         this.isRecording = isRecording;
     }
 
-    public boolean getIsRecording()
+    boolean getIsRecording()
     {
         return isRecording;
     }
 
-    public void clearRecordedNotes()
+    void clearRecordedNotes()
     {
-        recordedKeys.clear();
+        recordedKeysInfo.clear();
     }
 
-    public ArrayList<Key> getRecordedKeys()
+    ArrayList<KeyPressedInfo> getRecordedKeysInfo()
     {
-        return recordedKeys;
+        return recordedKeysInfo;
     }
 }

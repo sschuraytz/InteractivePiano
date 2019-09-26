@@ -2,18 +2,18 @@ package piano;
 
 class KeyPressedInfo
 {
-    private Key keyPressed;
+    private PianoLabel labelPressed;
     private long timeWhenPressed;
 
-    KeyPressedInfo(Key keyPressed, long timeWhenPressed)
+    KeyPressedInfo(PianoLabel labelPressed, long timeWhenPressed)
     {
-        this.keyPressed = keyPressed;
+        this.labelPressed = labelPressed;
         this.timeWhenPressed = timeWhenPressed;
     }
 
-    Key getKey()
+    PianoLabel getLabelPressed()
     {
-        return keyPressed;
+        return labelPressed;
     }
 
     long getTime()

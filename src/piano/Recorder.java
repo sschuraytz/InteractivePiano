@@ -7,9 +7,9 @@ class Recorder
     private ArrayList<KeyPressedInfo> recordedKeysInfo = new ArrayList<>();
     private boolean isRecording;
 
-    void append(Key keyPressed, long timePressed)
+    void append(PianoLabel labelPressed, long timePressed)
     {
-        recordedKeysInfo.add(new KeyPressedInfo(keyPressed, timePressed));
+        recordedKeysInfo.add(new KeyPressedInfo(labelPressed, timePressed));
     }
 
     void playBack()
@@ -17,6 +17,7 @@ class Recorder
         long waitTime;
         for (int ix = 0; ix < recordedKeysInfo.size(); ix++)
         {
+            PianoLabel labelPressed = recordedKeysInfo.get(ix).getLabelPressed();
             if (ix > 0)
             {
                 waitTime = recordedKeysInfo.get(ix).getTime() - recordedKeysInfo.get(ix - 1).getTime();
@@ -29,7 +30,7 @@ class Recorder
                     System.out.println(exc.getMessage());
                 }
             }
-            recordedKeysInfo.get(ix).getKey().play();
+            labelPressed.getKey().play();
         }
     }
 

@@ -27,6 +27,7 @@ public class PianoGUI extends JFrame
         JLayeredPane root = new JLayeredPane();
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
+
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         PianoLabel[] whiteLabels = addWhitePianoLabels(root);
         PianoLabel[][] blackLabels = addBlackPianoLabels(root);
@@ -35,15 +36,20 @@ public class PianoGUI extends JFrame
         recorderPanel.setSize(getWidth(), HEIGHT_OF_RECORDER_PANEL);
 
         root.add(recorderPanel, 3);
+
         JPanel instrumentsButtons = instrumentOptions();
         root.setLayout(new BorderLayout());
         root.add(instrumentsButtons, BorderLayout.SOUTH, 3);
+
         setContentPane(root);
 
 		// setting up sound
 		Synthesizer synth = MidiSystem.getSynthesizer();
 		synth.open();
 		channel = synth.getChannels()[SoundSettings.CHANNEL];
+
+
+
 	}
 
     private PianoLabel[] addWhitePianoLabels(JLayeredPane root) {

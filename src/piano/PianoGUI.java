@@ -14,6 +14,13 @@ public class PianoGUI extends JFrame
     private ArrayList<Key> keys;
     private Recorder recorder;
     private final int HEIGHT_OF_RECORDER_PANEL = 40;
+    //instrument program numbers found at https://www.midi.org/specifications-old/item/gm-level-1-sound-set
+    private static final int PIANO_PROGRAM  = 0;
+    private static final int  XYLOPHONE_PROGRAM = 14;
+    private static final int GUITAIR_PROGRAM = 25;
+    private static final int TRUMPET_PROGRAM = 57;
+    private static final int FLUTE_PROGRAM = 74;
+    private static final int DRUM_PROGRAM = 115;
 
     public PianoGUI() throws MidiUnavailableException
     {
@@ -117,14 +124,6 @@ public class PianoGUI extends JFrame
 
     private JPanel instrumentOptions ()
     {
-        //instrument program numbers found at https://www.midi.org/specifications-old/item/gm-level-1-sound-set
-        final int pianoProgram  = 0;
-        final int  xylophoneProgram = 14;
-        final int guitarProgram = 25;
-        final int trumpetProgram = 57;
-        final int fluteProgram = 74;
-        final int drumProgram = 115;
-
         JPanel instrumentsButtons = new JPanel();
         instrumentsButtons.setLayout(new FlowLayout());
         JButton piano = new JButton("Piano");
@@ -140,22 +139,22 @@ public class PianoGUI extends JFrame
         JButton drum = new JButton("Drum");
         instrumentsButtons.add(drum);
         piano.addActionListener(e->{
-            setInstrument(pianoProgram);
+            setInstrument(PIANO_PROGRAM);
         });
         xylophone.addActionListener(e->{
-            setInstrument(xylophoneProgram);
+            setInstrument(XYLOPHONE_PROGRAM);
         });
         guitar.addActionListener(e->{
-            setInstrument(guitarProgram);
+            setInstrument(GUITAIR_PROGRAM);
         });
         trumpet.addActionListener(e->{
-            setInstrument(trumpetProgram);
+            setInstrument(TRUMPET_PROGRAM);
         });
         flute.addActionListener(e->{
-            setInstrument(fluteProgram);
+            setInstrument(FLUTE_PROGRAM);
         });
         drum.addActionListener(e->{
-            setInstrument(drumProgram);
+            setInstrument(DRUM_PROGRAM);
         });
         return instrumentsButtons;
     }

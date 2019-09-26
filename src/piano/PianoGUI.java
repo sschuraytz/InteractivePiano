@@ -29,7 +29,7 @@ public class PianoGUI extends JFrame
         PianoLabel[] whiteLabels = addWhitePianoLabels(root);
         PianoLabel[][] blackLabels = addBlackPianoLabels(root);
         linkKeysToLabel(whiteLabels, blackLabels, root);
-        JPanel instrumentsButtons = instrumentOptions(root);
+        JPanel instrumentsButtons = instrumentOptions();
         root.setLayout(new BorderLayout());
         root.add(instrumentsButtons, BorderLayout.SOUTH, 3);
         setContentPane(root);
@@ -103,39 +103,47 @@ public class PianoGUI extends JFrame
         keys.add(key);
     }
 
-    private JPanel instrumentOptions (JLayeredPane root)
+    private JPanel instrumentOptions ()
     {
+        //instrument program numbers found at https://www.midi.org/specifications-old/item/gm-level-1-sound-set
+        final int pianoProgram  = 0;
+        final int  xylophoneProgram = 14;
+        final int guitarProgram = 25;
+        final int trumpetProgram = 57;
+        final int fluteProgram = 74;
+        final int drumProgram = 115;
+
         JPanel instrumentsButtons = new JPanel();
         instrumentsButtons.setLayout(new FlowLayout());
-        JButton piano = new JButton("Piano");//program 0
+        JButton piano = new JButton("Piano");
         instrumentsButtons.add(piano);
-        JButton xylophone = new JButton("Xylophone");//13
+        JButton xylophone = new JButton("Xylophone");
         instrumentsButtons.add(xylophone);
-        JButton guitar = new JButton("Guitar");//24
+        JButton guitar = new JButton("Guitar");
         instrumentsButtons.add(guitar);
-        JButton trumpet = new JButton("Trumpet");//56
+        JButton trumpet = new JButton("Trumpet");
         instrumentsButtons.add(trumpet);
-        JButton flute = new JButton("Flute");//73
+        JButton flute = new JButton("Flute");
         instrumentsButtons.add(flute);
-        JButton drum = new JButton("Drum");//32
+        JButton drum = new JButton("Drum");
         instrumentsButtons.add(drum);
         piano.addActionListener(e->{
-            setInstrument(0);
+            setInstrument(pianoProgram);
         });
         xylophone.addActionListener(e->{
-            setInstrument(14);
+            setInstrument(xylophoneProgram);
         });
         guitar.addActionListener(e->{
-            setInstrument(25);
+            setInstrument(guitarProgram);
         });
         trumpet.addActionListener(e->{
-            setInstrument(57);
+            setInstrument(trumpetProgram);
         });
         flute.addActionListener(e->{
-            setInstrument(74);
+            setInstrument(fluteProgram);
         });
         drum.addActionListener(e->{
-            setInstrument(115);
+            setInstrument(drumProgram);
         });
         return instrumentsButtons;
     }

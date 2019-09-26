@@ -3,33 +3,42 @@ package piano;
 import javax.swing.*;
 import java.awt.*;
 
-public class RecorderPanel extends JPanel
+class RecorderPanel extends JPanel
 {
-    JButton BtnStartRecording;
-    JButton BtnStopRecording;
-    JButton BtnPlayBack;
-    Recorder recorder;
+    private JButton btnStartRecording;
+    private JButton btnStopRecording;
+    private JButton btnPlayBack;
+    private Recorder recorder;
 
-    public RecorderPanel(Recorder recorder)
+    private final Color START_BTN_NOT_PRESSED_COLOR = new Color(46, 177, 8);
+    private final Color START_BTN_PRESSED_COLOR = new Color(8, 74, 14, 141);
+    private final Color STOP_BTN_ACTIVE_COLOR = new Color(254, 45, 77, 253);
+    private final Color PLAYBACK_BTN_ACTIVE_COLOR = new Color(108, 63, 177, 253);
+    private final Color INACTIVE_COLOR = new Color(88, 88, 88, 253);
+
+    RecorderPanel(Recorder recorder)
     {
         this.recorder = recorder;
-        BtnStartRecording = createStartRecordingBtn();
-        BtnStopRecording = createStopRecordingBtn();
-        BtnPlayBack = createPlaybackBtn();
-        add(BtnStartRecording);
-        add(BtnStopRecording);
-        add(BtnPlayBack);
+        setBackground(new Color(4, 4, 4, 253));
+        btnStartRecording = createStartRecordingBtn();
+        btnStopRecording = createStopRecordingBtn();
+        btnPlayBack = createPlaybackBtn();
+        add(btnStartRecording);
+        add(btnStopRecording);
+        add(btnPlayBack);
     }
-
 
     private JButton createStartRecordingBtn()
     {
         JButton start = new JButton("Record");
-        start.setBackground(new Color(46, 177, 8));
+        start.setBackground(START_BTN_NOT_PRESSED_COLOR);
         start.addActionListener(e -> {
             if (!recorder.getIsRecording())
             {
                 recorder.setIsRecording(true);
+                start.setBackground(START_BTN_PRESSED_COLOR);
+                start.setText("Recording...");
+                btnStopRecording.setBackground(STOP_BTN_ACTIVE_COLOR);
                 recorder.clearRecordedNotes();
             }
         });
@@ -39,11 +48,15 @@ public class RecorderPanel extends JPanel
     private JButton createStopRecordingBtn()
     {
         JButton stop = new JButton("Stop");
-        stop.setBackground(new Color(196, 15, 25));
+        stop.setBackground(INACTIVE_COLOR);
         stop.addActionListener(e -> {
             if (recorder.getIsRecording())
             {
                 recorder.setIsRecording(false);
+                stop.setBackground(INACTIVE_COLOR);
+                btnStartRecording.setText("Record");
+                btnStartRecording.setBackground(START_BTN_NOT_PRESSED_COLOR);
+                btnPlayBack.setBackground(PLAYBACK_BTN_ACTIVE_COLOR);
             }
         });
         return stop;
@@ -52,7 +65,7 @@ public class RecorderPanel extends JPanel
     private JButton createPlaybackBtn()
     {
         JButton playBack = new JButton("Play Back");
-        playBack.setBackground(new Color(108, 63, 177));
+        playBack.setBackground(INACTIVE_COLOR);
         playBack.addActionListener(e -> {
             if (!recorder.getRecordedKeys().isEmpty())
             {
@@ -68,6 +81,4 @@ public class RecorderPanel extends JPanel
         });
         return playBack;
     }
-
-
 }

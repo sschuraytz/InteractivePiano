@@ -8,6 +8,8 @@ public class PianoGUI extends JFrame {
     private Colors colors;
     private JLayeredPane root;
     private MidiChannel midiChannel;
+    private Recorder recorder;
+    private final int HEIGHT_OF_RECORDER_PANEL = 40;
 
     public PianoGUI(MidiChannel midiChannel) {
         this.midiChannel = midiChannel;
@@ -17,6 +19,7 @@ public class PianoGUI extends JFrame {
 
         colors = new Colors();
         root = new JLayeredPane();
+        recorder = new Recorder();
 
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
@@ -24,6 +27,10 @@ public class PianoGUI extends JFrame {
         // TODO if octaves == 7, set up full piano board with extra keys on both sides
         addWhitePianoLabels();
         addBlackPianoLabels();
+        RecorderPanel recorderPanel = new RecorderPanel(recorder);
+        recorderPanel.setSize(getWidth(), HEIGHT_OF_RECORDER_PANEL);
+
+        root.add(recorderPanel, 3);
         setContentPane(root);
 	}
 
@@ -68,7 +75,7 @@ public class PianoGUI extends JFrame {
         PianoLabel pianoLabel = new PianoLabel(color, colors.getColor(index), new Key(index, midiChannel));
         pianoLabel.setLocation(placement, 0);
         pianoLabel.setSize(pianoLabel.getDimension());
-        pianoLabel.addMouseListener(new KeyListener(this));
+        pianoLabel.addMouseListener(new KeyListener(this, recorder));
 
         int level = 0;
         if (color == Color.BLACK) {

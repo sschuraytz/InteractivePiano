@@ -40,6 +40,10 @@ public class PianoLabel extends JLabel
 		return defaultColor;
 	}
 
+	public Key getKey() {
+		return key;
+	}
+
 	public void setColorToDefaultColor() {
 		setBackground(defaultColor);
 	}

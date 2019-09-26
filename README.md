@@ -11,4 +11,6 @@ Esther Gassner https://github.com/esthergassner
 
 Helen Sutton https://github.com/HelenSutton
 
+Kaila Minkowitz https://github.com/kailamink
+
 Original Multi-client piano app written by Miriam and Aviva

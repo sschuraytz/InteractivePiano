@@ -6,9 +6,11 @@ import java.awt.event.MouseListener;
 public class KeyListener implements MouseListener
 {
 	private PianoGUI gui;
+    private final Recorder recorder;
 
-	public KeyListener(PianoGUI pianoGUI) {
+	public KeyListener(PianoGUI pianoGUI, Recorder recorder) {
 		this.gui = pianoGUI;
+        this.recorder = recorder;
 	}
 
 	@Override
@@ -33,9 +35,14 @@ public class KeyListener implements MouseListener
 	public void mousePressed(MouseEvent arg0)
 	{
 		PianoLabel pianoLabel = (PianoLabel) arg0.getSource();
-		 // TODO stop level from changing on color change
-		pianoLabel.play();
-		gui.setLevel(pianoLabel);
+        pianoLabel.play();
+        gui.setLevel(pianoLabel);
+        Key currentKey = pianoLabel.getKey();
+
+		if (recorder.getIsRecording())
+		{
+			recorder.append(currentKey, System.currentTimeMillis());
+		}
 	}
 
 	@Override

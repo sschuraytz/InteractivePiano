@@ -20,9 +20,10 @@ public class Recorder
         {
             if (ix > 0)
             {
-                Thread.sleep((timesPressed.get(ix) - timesPressed.get(ix - 1))); //how many seconds
+                Thread.sleep((timesPressed.get(ix) - timesPressed.get(ix - 1))); //how many seconds between presses
+                                                                                 //something's funny about this...
             }
-            recordedKeys.get(ix).play();
+            recordedKeys.get(ix).play(); //why doesn't playback show the colors?
         }
     }
 

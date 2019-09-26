@@ -12,13 +12,13 @@ public class PianoLabel extends JLabel
 	private Dimension dimension;
 
 
-	public PianoLabel(Color defaultColor, Color colorOnClick) {
+	public PianoLabel(Color defaultColor, Color colorOnClick, Key key) {
 		if (defaultColor == Color.WHITE || defaultColor == Color.BLACK) {
-			createPianoLabel(defaultColor, colorOnClick);
+			createPianoLabel(defaultColor, colorOnClick, key);
 		}
 	}
 
-	private void createPianoLabel(Color defaultColor, Color onClickColor) {
+	private void createPianoLabel(Color defaultColor, Color onClickColor, Key key) {
 		if (defaultColor == Color.WHITE) {
 			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.FRAME_HEIGHT);
 		} else {
@@ -26,13 +26,10 @@ public class PianoLabel extends JLabel
 		}
 		this.defaultColor = defaultColor;
 		this.colorOnClick = onClickColor;
+		this.key = key;
 		setPreferredSize(dimension);
 		setOpaque(true);
 		setBackground(defaultColor);
-	}
-
-	public void setKey(Key k) {
-		this.key = k;
 	}
 
 	public Dimension getDimension() {

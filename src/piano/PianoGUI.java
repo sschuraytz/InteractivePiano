@@ -65,10 +65,9 @@ public class PianoGUI extends JFrame {
     }
 
     private void addPianoLabel(Color color, int index, int placement) {
-        PianoLabel pianoLabel = new PianoLabel(color, colors.getColor(index));
+        PianoLabel pianoLabel = new PianoLabel(color, colors.getColor(index), new Key(index, midiChannel));
         pianoLabel.setLocation(placement, 0);
         pianoLabel.setSize(pianoLabel.getDimension());
-        pianoLabel.setKey(new Key(index, midiChannel));
         pianoLabel.addMouseListener(new KeyListener(this));
 
         int level = 0;

@@ -14,6 +14,13 @@ public class PianoGUI extends JFrame
     private ArrayList<Key> keys;
     private Recorder recorder;
     private final int HEIGHT_OF_RECORDER_PANEL = 40;
+    //instrument program numbers found at https://www.midi.org/specifications-old/item/gm-level-1-sound-set
+    private static final int PIANO_PROGRAM  = 0;
+    private static final int  XYLOPHONE_PROGRAM = 14;
+    private static final int GUITAIR_PROGRAM = 25;
+    private static final int TRUMPET_PROGRAM = 57;
+    private static final int FLUTE_PROGRAM = 74;
+    private static final int DRUM_PROGRAM = 115;
 
     public PianoGUI() throws MidiUnavailableException
     {
@@ -36,6 +43,11 @@ public class PianoGUI extends JFrame
         recorderPanel.setSize(getWidth(), HEIGHT_OF_RECORDER_PANEL);
 
         root.add(recorderPanel, 3);
+
+        JPanel instrumentsButtons = instrumentOptions();
+        root.setLayout(new BorderLayout());
+        root.add(instrumentsButtons, BorderLayout.SOUTH, 3);
+
         setContentPane(root);
 
 		// setting up sound
@@ -110,6 +122,43 @@ public class PianoGUI extends JFrame
         keys.add(key);
     }
 
+    private JPanel instrumentOptions ()
+    {
+        JPanel instrumentsButtons = new JPanel();
+        instrumentsButtons.setLayout(new FlowLayout());
+        JButton piano = new JButton("Piano");
+        instrumentsButtons.add(piano);
+        JButton xylophone = new JButton("Xylophone");
+        instrumentsButtons.add(xylophone);
+        JButton guitar = new JButton("Guitar");
+        instrumentsButtons.add(guitar);
+        JButton trumpet = new JButton("Trumpet");
+        instrumentsButtons.add(trumpet);
+        JButton flute = new JButton("Flute");
+        instrumentsButtons.add(flute);
+        JButton drum = new JButton("Drum");
+        instrumentsButtons.add(drum);
+        piano.addActionListener(e->{
+            setInstrument(PIANO_PROGRAM);
+        });
+        xylophone.addActionListener(e->{
+            setInstrument(XYLOPHONE_PROGRAM);
+        });
+        guitar.addActionListener(e->{
+            setInstrument(GUITAIR_PROGRAM);
+        });
+        trumpet.addActionListener(e->{
+            setInstrument(TRUMPET_PROGRAM);
+        });
+        flute.addActionListener(e->{
+            setInstrument(FLUTE_PROGRAM);
+        });
+        drum.addActionListener(e->{
+            setInstrument(DRUM_PROGRAM);
+        });
+        return instrumentsButtons;
+    }
+
 	public void playIntro()
 	{
 		try
@@ -139,4 +188,8 @@ public class PianoGUI extends JFrame
 	{
 		return channel;
 	}
+
+	public void setInstrument(int instrument){
+        channel.programChange(instrument);
+    }
 }

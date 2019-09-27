@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import javax.swing.*;
 
 public class Key
@@ -48,7 +49,7 @@ public class Key
 		t.start();
 	}
 
-	private void resetColor()
+	public void resetColor()
 	{
 		pianoLabel.setBackground(pianoLabel.getPreferredColor());
 		pianoLabel.repaint();

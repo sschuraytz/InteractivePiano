@@ -49,4 +49,6 @@ public class PianoLabel extends JLabel
 	public Dimension getDimension() {
 		return dimension;
 	}
+
+
 }

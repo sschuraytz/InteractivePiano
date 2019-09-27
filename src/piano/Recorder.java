@@ -30,7 +30,13 @@ class Recorder
                     System.out.println(exc.getMessage());
                 }
             }
-            labelPressed.getKey().play();
+            labelPressed.play();
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            labelPressed.setColorToDefaultColor();
         }
     }
 

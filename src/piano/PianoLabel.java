@@ -36,14 +36,6 @@ public class PianoLabel extends JLabel
 		return dimension;
 	}
 
-	public Color getDefaultColor() {
-		return defaultColor;
-	}
-
-	public Key getKey() {
-		return key;
-	}
-
 	public void setColorToDefaultColor() {
 		setBackground(defaultColor);
 	}

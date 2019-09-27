@@ -30,7 +30,8 @@ public class PianoGUI extends JFrame {
         RecorderPanel recorderPanel = new RecorderPanel(recorder);
         recorderPanel.setSize(getWidth(), HEIGHT_OF_RECORDER_PANEL);
 
-        root.add(recorderPanel, 3);
+        root.setLayer(recorderPanel, 2);
+        root.add(recorderPanel);
         setContentPane(root);
 	}
 
@@ -75,20 +76,13 @@ public class PianoGUI extends JFrame {
         PianoLabel pianoLabel = new PianoLabel(color, colors.getColor(index), new Key(index, midiChannel));
         pianoLabel.setLocation(placement, 0);
         pianoLabel.setSize(pianoLabel.getDimension());
-        pianoLabel.addMouseListener(new KeyListener(this, recorder));
+        pianoLabel.addMouseListener(new KeyListener(recorder));
 
         int level = 0;
         if (color == Color.BLACK) {
             level = 1;
         }
-        root.add(pianoLabel, level);
-    }
-
-    public void setLevel(PianoLabel pianoLabel) {
-        if (pianoLabel.getDefaultColor() == Color.BLACK) {
-            root.moveToFront(pianoLabel);
-        } else {
-            root.moveToBack(pianoLabel);
-        }
+        root.setLayer(pianoLabel, level);
+        root.add(pianoLabel);
     }
 }

@@ -67,14 +67,14 @@ public class Keyboard extends JLayeredPane {
     private void addPianoLabel(Color color, int index, int placement) {
         PianoLabel pianoLabel = new PianoLabel(color, colors.getColor(index), new Key(index, midiChannel));
         pianoLabel.setLocation(placement, 0);
-        pianoLabel.setSize(pianoLabel.getDimension());
         pianoLabel.addMouseListener(new KeyListener(recorder));
 
-        int level = BACK_LAYER;
-        if (color == Color.BLACK) {
-            level = FRONT_LAYER;
+        if (color == Color.WHITE) {
+            setLayer(pianoLabel, BACK_LAYER);
+        } else {
+            setLayer(pianoLabel, FRONT_LAYER);
         }
-        setLayer(pianoLabel, level);
+
         add(pianoLabel);
     }
 }

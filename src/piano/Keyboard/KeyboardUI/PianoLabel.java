@@ -4,7 +4,6 @@ import piano.Keyboard.KeyboardAudio.Key;
 import piano.Main.MainFrameInterface;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.JLabel;
 
 public class PianoLabel extends JLabel
@@ -12,8 +11,6 @@ public class PianoLabel extends JLabel
 	private Key key;
 	private Color defaultColor; // color of key when NOT clicked
 	private Color colorOnClick; // color of key when clicked
-	private Dimension dimension;
-
 
 	public PianoLabel(Color defaultColor, Color colorOnClick, Key key) {
 		if (defaultColor == Color.WHITE || defaultColor == Color.BLACK) {
@@ -23,20 +20,15 @@ public class PianoLabel extends JLabel
 
 	private void createPianoLabel(Color defaultColor, Color onClickColor, Key key) {
 		if (defaultColor == Color.WHITE) {
-			dimension = new Dimension(KeyStats.WHITE_WIDTH, MainFrameInterface.KEYBOARD_HEIGHT);
+			setSize(KeyStats.WHITE_WIDTH, MainFrameInterface.KEYBOARD_HEIGHT);
 		} else {
-			dimension = new Dimension(KeyStats.BLACK_WIDTH, KeyStats.BLACK_HEIGHT);
+			setSize(KeyStats.BLACK_WIDTH, KeyStats.BLACK_HEIGHT);
 		}
 		this.defaultColor = defaultColor;
 		this.colorOnClick = onClickColor;
 		this.key = key;
-		setPreferredSize(dimension);
 		setOpaque(true);
 		setBackground(defaultColor);
-	}
-
-	public Dimension getDimension() {
-		return dimension;
 	}
 
 	public void setColorToDefaultColor() {

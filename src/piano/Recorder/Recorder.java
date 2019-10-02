@@ -1,13 +1,14 @@
-package piano;
+package piano.Recorder;
 
+import piano.Keyboard.KeyboardUI.PianoLabel;
 import java.util.ArrayList;
 
-class Recorder
+public class Recorder
 {
     private ArrayList<KeyPressedInfo> recordedKeysInfo = new ArrayList<>();
     private boolean isRecording;
 
-    void append(PianoLabel labelPressed, long timePressed)
+    public void append(PianoLabel labelPressed, long timePressed)
     {
         recordedKeysInfo.add(new KeyPressedInfo(labelPressed, timePressed));
     }
@@ -45,7 +46,7 @@ class Recorder
         this.isRecording = isRecording;
     }
 
-    boolean getIsRecording()
+    public boolean getIsRecording()
     {
         return isRecording;
     }

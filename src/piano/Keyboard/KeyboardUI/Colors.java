@@ -1,4 +1,4 @@
-package piano;
+package piano.Keyboard.KeyboardUI;
 
 import java.awt.Color;
 

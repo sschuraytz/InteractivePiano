@@ -1,4 +1,7 @@
-package piano;
+package piano.Keyboard.KeyboardUI;
+
+import piano.Keyboard.KeyboardAudio.Key;
+import piano.Main.MainFrameInterface;
 
 import java.awt.Color;
 import java.awt.Dimension;

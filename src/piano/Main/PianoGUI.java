@@ -1,5 +1,9 @@
-package piano;
+package piano.Main;
 
+import piano.Instruments.InstrumentsPanel;
+import piano.Keyboard.KeyboardUI.Keyboard;
+import piano.Recorder.Recorder;
+import piano.Recorder.RecorderPanel;
 import java.awt.*;
 import javax.sound.midi.MidiChannel;
 import javax.swing.*;

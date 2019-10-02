@@ -1,4 +1,4 @@
-package piano;
+package piano.Keyboard.KeyboardAudio;
 
 public interface SoundSettings
 {

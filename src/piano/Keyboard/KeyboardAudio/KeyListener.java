@@ -1,5 +1,7 @@
-package piano;
+package piano.Keyboard.KeyboardAudio;
 
+import piano.Keyboard.KeyboardUI.PianoLabel;
+import piano.Recorder.Recorder;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

@@ -1,4 +1,8 @@
-package piano;
+package piano.Main;
+
+import piano.Intro.Intro;
+import piano.Keyboard.KeyboardAudio.Channel;
+import piano.Recorder.Recorder;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;

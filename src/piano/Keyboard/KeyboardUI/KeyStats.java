@@ -1,4 +1,6 @@
-package piano;
+package piano.Keyboard.KeyboardUI;
+
+import piano.Main.MainFrameInterface;
 
 public interface KeyStats
 {

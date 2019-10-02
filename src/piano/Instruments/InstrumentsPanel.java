@@ -1,5 +1,6 @@
-package piano;
+package piano.Instruments;
 
+import piano.Main.MainFrameInterface;
 import javax.sound.midi.MidiChannel;
 import javax.swing.*;
 import java.awt.*;

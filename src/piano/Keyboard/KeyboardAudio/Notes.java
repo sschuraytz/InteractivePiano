@@ -1,4 +1,6 @@
-package piano;
+package piano.Keyboard.KeyboardAudio;
+
+import piano.Keyboard.KeyboardUI.KeyStats;
 
 public interface Notes
 {

@@ -1,4 +1,4 @@
-package piano;
+package piano.Main;
 
 public interface MainFrameInterface {
     int KEYBOARD_WIDTH = 750;

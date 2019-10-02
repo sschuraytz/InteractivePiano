@@ -17,7 +17,6 @@ public class PianoGUI extends JFrame {
 
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.BLACK);
-        root.setOpaque(true);
 
         root.add(new RecorderPanel(recorder), BorderLayout.NORTH);
         root.add(new Keyboard(midiChannel, recorder), BorderLayout.CENTER);

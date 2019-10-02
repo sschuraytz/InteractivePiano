@@ -22,7 +22,6 @@ public class Keyboard extends JLayeredPane {
 
         setSize(MainFrameInterface.KEYBOARD_WIDTH, MainFrameInterface.KEYBOARD_HEIGHT);
         setBackground(Color.BLACK);
-        setOpaque(true);
 
         addWhitePianoLabels();
         addBlackPianoLabels();

@@ -1,16 +1,15 @@
 package piano.Instruments;
 
-import javax.sound.midi.MidiChannel;
 import java.util.ArrayList;
 
 public class InstrumentButtonsArray extends ArrayList<InstrumentButton> {
 
-    public InstrumentButtonsArray(MidiChannel midiChannel) {
-        add(new InstrumentButton(InstrumentsInterface.PIANO, midiChannel));
-        add(new InstrumentButton(InstrumentsInterface.XYLOPHONE, midiChannel));
-        add(new InstrumentButton(InstrumentsInterface.GUITAR, midiChannel));
-        add(new InstrumentButton(InstrumentsInterface.TRUMPET, midiChannel));
-        add(new InstrumentButton(InstrumentsInterface.FLUTE, midiChannel));
-        add(new InstrumentButton(InstrumentsInterface.DRUM, midiChannel));
+    public InstrumentButtonsArray() {
+        add(new InstrumentButton(InstrumentsInterface.PIANO));
+        add(new InstrumentButton(InstrumentsInterface.XYLOPHONE));
+        add(new InstrumentButton(InstrumentsInterface.GUITAR));
+        add(new InstrumentButton(InstrumentsInterface.TRUMPET));
+        add(new InstrumentButton(InstrumentsInterface.FLUTE));
+        add(new InstrumentButton(InstrumentsInterface.DRUM));
     }
 }

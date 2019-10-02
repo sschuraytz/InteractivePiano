@@ -1,11 +1,13 @@
 package piano.Instruments;
 
-import javax.sound.midi.MidiChannel;
 import javax.swing.*;
 
 public class InstrumentButton extends JButton {
 
-    public InstrumentButton(int instrument, MidiChannel midiChannel) {
+    private int instrument;
+
+    public InstrumentButton(int instrument) {
+        this.instrument = instrument;
         String text;
         switch (instrument) {
             case InstrumentsInterface.PIANO:
@@ -32,6 +34,9 @@ public class InstrumentButton extends JButton {
         }
 
         setText(text);
-        addActionListener(e -> midiChannel.programChange(instrument));
+    }
+
+    int getInstrument() {
+        return instrument;
     }
 }

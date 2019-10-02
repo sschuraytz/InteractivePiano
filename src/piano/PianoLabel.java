@@ -20,7 +20,7 @@ public class PianoLabel extends JLabel
 
 	private void createPianoLabel(Color defaultColor, Color onClickColor, Key key) {
 		if (defaultColor == Color.WHITE) {
-			dimension = new Dimension(KeyStats.WHITE_WIDTH, KeyStats.FRAME_HEIGHT);
+			dimension = new Dimension(KeyStats.WHITE_WIDTH, MainFrameInterface.KEYBOARD_HEIGHT);
 		} else {
 			dimension = new Dimension(KeyStats.BLACK_WIDTH, KeyStats.BLACK_HEIGHT);
 		}

@@ -1,88 +1,22 @@
 package piano;
 
-import java.awt.Color;
+import java.awt.*;
 import javax.sound.midi.MidiChannel;
 import javax.swing.*;
 
 public class PianoGUI extends JFrame {
-    private Colors colors;
-    private JLayeredPane root;
-    private MidiChannel midiChannel;
-    private Recorder recorder;
-    private final int HEIGHT_OF_RECORDER_PANEL = 40;
 
-    public PianoGUI(MidiChannel midiChannel) {
-        this.midiChannel = midiChannel;
-        this.setTitle("MY PIANO");
-        setSize(KeyStats.FRAME_WIDTH, KeyStats.FRAME_HEIGHT);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public PianoGUI(MidiChannel midiChannel, Recorder recorder) {
+        setTitle("MY PIANO");
+        setSize(MainFrameInterface.KEYBOARD_WIDTH, MainFrameInterface.FRAME_HEIGHT);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        colors = new Colors();
-        root = new JLayeredPane();
-        recorder = new Recorder();
-
+        JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Color.BLACK);
         root.setOpaque(true);
 
-        // TODO if octaves == 7, set up full piano board with extra keys on both sides
-        addWhitePianoLabels();
-        addBlackPianoLabels();
-        RecorderPanel recorderPanel = new RecorderPanel(recorder);
-        recorderPanel.setSize(getWidth(), HEIGHT_OF_RECORDER_PANEL);
-
-        root.setLayer(recorderPanel, 2);
-        root.add(recorderPanel);
+        root.add(new RecorderPanel(recorder), BorderLayout.NORTH);
+        root.add(new Keyboard(midiChannel, recorder), BorderLayout.CENTER);
         setContentPane(root);
 	}
-
-    private void addWhitePianoLabels() {
-        int placement = KeyStats.SPACE_BETWEEN_WHITE_KEYS;
-
-        int index = 0;
-        for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
-            for (int whiteKey = 0; whiteKey < KeyStats.NUM_WHITE_KEYS_IN_OCTAVE; whiteKey++) {
-                addPianoLabel(Color.WHITE, index, placement);
-
-                placement += KeyStats.WHITE_WIDTH + KeyStats.SPACE_BETWEEN_WHITE_KEYS;
-
-                if (whiteKey == 2 || whiteKey == KeyStats.NUM_WHITE_KEYS_IN_OCTAVE - 1) {
-                    index++;
-                } else {
-                    index += 2;
-                }
-            }
-        }
-    }
-
-    private void addBlackPianoLabels() {
-        int placement = KeyStats.FIRST_BLACK;
-        int index = 1;
-        for (int octave = 0; octave < KeyStats.OCTAVES; octave++) {
-            for (int blackKey = 0; blackKey < KeyStats.NUM_BLACK_KEYS_IN_OCTAVE; blackKey++) {
-                addPianoLabel(Color.BLACK, index, placement);
-
-                if (blackKey == 1 || blackKey == KeyStats.NUM_BLACK_KEYS_IN_OCTAVE - 1) {
-                    placement += KeyStats.BLACK_WIDTH + KeyStats.BIG_SPACE_BETWEEN_BLACK_KEYS;
-                    index +=3;
-                } else {
-                    placement += KeyStats.BLACK_WIDTH + KeyStats.SPACE_BETWEEN_BLACK_KEYS;
-                    index += 2;
-                }
-            }
-        }
-    }
-
-    private void addPianoLabel(Color color, int index, int placement) {
-        PianoLabel pianoLabel = new PianoLabel(color, colors.getColor(index), new Key(index, midiChannel));
-        pianoLabel.setLocation(placement, 0);
-        pianoLabel.setSize(pianoLabel.getDimension());
-        pianoLabel.addMouseListener(new KeyListener(recorder));
-
-        int level = 0;
-        if (color == Color.BLACK) {
-            level = 1;
-        }
-        root.setLayer(pianoLabel, level);
-        root.add(pianoLabel);
-    }
 }

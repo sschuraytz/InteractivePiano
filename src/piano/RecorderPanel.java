@@ -20,6 +20,7 @@ class RecorderPanel extends JPanel
     {
         this.recorder = recorder;
         setBackground(new Color(4, 4, 4, 253));
+        setSize(MainFrameInterface.KEYBOARD_WIDTH, MainFrameInterface.RECORDER_PANEL_HEIGHT);
         btnStartRecording = createStartRecordingBtn();
         btnStopRecording = createStopRecordingBtn();
         btnPlayBack = createPlaybackBtn();

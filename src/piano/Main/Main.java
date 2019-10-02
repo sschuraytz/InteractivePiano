@@ -11,8 +11,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             MidiChannel midiChannel = new Channel().getChannel();
-            Recorder recorder = new Recorder();
-            PianoGUI frame = new PianoGUI(midiChannel, recorder);
+            PianoGUI frame = new PianoGUI(new Channel().getChannel(), new Recorder());
             frame.setVisible(true);
             new Intro().playIntro(midiChannel);
         } catch (MidiUnavailableException e) {

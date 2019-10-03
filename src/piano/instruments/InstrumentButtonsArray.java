@@ -1,4 +1,4 @@
-package piano.Instruments;
+package piano.instruments;
 
 import java.util.ArrayList;
 

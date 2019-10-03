@@ -1,6 +1,6 @@
-package piano.Recorder;
+package piano.recorder;
 
-import piano.Main.MainFrameInterface;
+import piano.main.MainFrameInterface;
 import javax.swing.*;
 import java.awt.*;
 

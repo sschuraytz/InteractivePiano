@@ -1,7 +1,7 @@
-package piano.Intro;
+package piano.intro;
 
-import piano.Keyboard.KeyboardAudio.Notes;
-import piano.Keyboard.KeyboardAudio.SoundSettings;
+import piano.keyboard.keyboardAudio.Notes;
+import piano.keyboard.keyboardAudio.SoundSettings;
 
 import javax.sound.midi.MidiChannel;
 

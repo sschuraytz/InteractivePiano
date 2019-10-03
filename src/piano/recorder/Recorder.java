@@ -1,6 +1,6 @@
-package piano.Recorder;
+package piano.recorder;
 
-import piano.Keyboard.KeyboardUI.PianoLabel;
+import piano.keyboard.keyboardUI.PianoLabel;
 import java.util.ArrayList;
 
 public class Recorder

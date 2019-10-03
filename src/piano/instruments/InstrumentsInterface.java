@@ -1,4 +1,4 @@
-package piano.Instruments;
+package piano.instruments;
 
 public interface InstrumentsInterface {
     //instrument program numbers found at https://www.midi.org/specifications-old/item/gm-level-1-sound-set

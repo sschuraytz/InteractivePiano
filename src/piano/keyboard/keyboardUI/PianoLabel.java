@@ -1,7 +1,7 @@
-package piano.Keyboard.KeyboardUI;
+package piano.keyboard.keyboardUI;
 
-import piano.Keyboard.KeyboardAudio.Key;
-import piano.Main.MainFrameInterface;
+import piano.keyboard.keyboardAudio.Key;
+import piano.main.MainFrameInterface;
 
 import java.awt.Color;
 import javax.swing.JLabel;

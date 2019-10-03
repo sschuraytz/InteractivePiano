@@ -1,4 +1,4 @@
-package piano.Instruments;
+package piano.instruments;
 
 import javax.swing.*;
 

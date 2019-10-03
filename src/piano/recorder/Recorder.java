@@ -1,15 +1,16 @@
-package piano;
+package piano.recorder;
 
+import piano.keyboard.keyboardui.PianoLabel;
 import java.util.ArrayList;
 
-class Recorder
+public class Recorder
 {
     private ArrayList<KeyPressedInfo> recordedKeysInfo = new ArrayList<>();
     private boolean isRecording;
 
-    void append(Key keyPressed, long timePressed)
+    public void append(PianoLabel labelPressed, long timePressed)
     {
-        recordedKeysInfo.add(new KeyPressedInfo(keyPressed, timePressed));
+        recordedKeysInfo.add(new KeyPressedInfo(labelPressed, timePressed));
     }
 
     void playBack()
@@ -17,6 +18,7 @@ class Recorder
         long waitTime;
         for (int ix = 0; ix < recordedKeysInfo.size(); ix++)
         {
+            PianoLabel labelPressed = recordedKeysInfo.get(ix).getLabelPressed();
             if (ix > 0)
             {
                 waitTime = recordedKeysInfo.get(ix).getTime() - recordedKeysInfo.get(ix - 1).getTime();
@@ -29,7 +31,13 @@ class Recorder
                     System.out.println(exc.getMessage());
                 }
             }
-            recordedKeysInfo.get(ix).getKey().play();
+            labelPressed.play();
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            labelPressed.setColorToDefaultColor();
         }
     }
 
@@ -38,7 +46,7 @@ class Recorder
         this.isRecording = isRecording;
     }
 
-    boolean getIsRecording()
+    public boolean getIsRecording()
     {
         return isRecording;
     }

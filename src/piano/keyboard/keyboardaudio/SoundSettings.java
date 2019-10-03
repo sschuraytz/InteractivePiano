@@ -1,4 +1,4 @@
-package piano;
+package piano.keyboard.keyboardaudio;
 
 public interface SoundSettings
 {

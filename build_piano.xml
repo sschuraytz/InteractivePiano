@@ -5,7 +5,7 @@
 		<jar jarfile="Piano.jar">
 			<manifest>
 			<attribute name="Main-Class"
-				value="piano.PianoGUI"/>
+				value="piano.main.PianoGUI"/>
 				</manifest>
   
 			<fileset dir="./bin">

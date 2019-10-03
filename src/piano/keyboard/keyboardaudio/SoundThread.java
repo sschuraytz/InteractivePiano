@@ -1,4 +1,4 @@
-package piano;
+package piano.keyboard.keyboardaudio;
 
 import javax.sound.midi.MidiChannel;
 

@@ -1,9 +1,10 @@
-package piano;
+package piano.recorder;
 
+import piano.main.MainFrameInterface;
 import javax.swing.*;
 import java.awt.*;
 
-class RecorderPanel extends JPanel
+public class RecorderPanel extends JPanel
 {
     private JButton btnStartRecording;
     private JButton btnStopRecording;
@@ -16,10 +17,11 @@ class RecorderPanel extends JPanel
     private final Color PLAYBACK_BTN_ACTIVE_COLOR = new Color(108, 63, 177, 253);
     private final Color INACTIVE_COLOR = new Color(88, 88, 88, 253);
 
-    RecorderPanel(Recorder recorder)
+    public RecorderPanel(Recorder recorder)
     {
         this.recorder = recorder;
         setBackground(new Color(4, 4, 4, 253));
+        setSize(MainFrameInterface.KEYBOARD_WIDTH, MainFrameInterface.RECORDER_PANEL_HEIGHT);
         btnStartRecording = createStartRecordingBtn();
         btnStopRecording = createStopRecordingBtn();
         btnPlayBack = createPlaybackBtn();

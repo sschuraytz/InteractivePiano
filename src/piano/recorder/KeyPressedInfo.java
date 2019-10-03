@@ -1,6 +1,6 @@
 package piano.recorder;
 
-import piano.keyboard.keyboardUI.PianoLabel;
+import piano.keyboard.keyboardui.PianoLabel;
 
 class KeyPressedInfo
 {

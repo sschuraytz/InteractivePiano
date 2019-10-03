@@ -1,7 +1,7 @@
 package piano.main;
 
 import piano.intro.Intro;
-import piano.keyboard.keyboardAudio.Channel;
+import piano.keyboard.keyboardaudio.Channel;
 import piano.recorder.Recorder;
 
 import javax.sound.midi.MidiChannel;

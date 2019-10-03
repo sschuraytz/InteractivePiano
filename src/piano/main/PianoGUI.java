@@ -1,7 +1,7 @@
 package piano.main;
 
 import piano.instruments.InstrumentsPanel;
-import piano.keyboard.keyboardUI.Keyboard;
+import piano.keyboard.keyboardui.Keyboard;
 import piano.recorder.Recorder;
 import piano.recorder.RecorderPanel;
 import java.awt.*;

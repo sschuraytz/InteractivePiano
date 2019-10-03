@@ -1,4 +1,4 @@
-package piano.keyboard.keyboardUI;
+package piano.keyboard.keyboardui;
 
 import piano.main.MainFrameInterface;
 
